@@ -1,11 +1,10 @@
 #set project directories
-DEBUG ?= 0
-PROJDIR := .
-SOURCEDIR := $(PROJDIR)
-BUILDDIR := $(PROJDIR)/build
-IDIRS := -I$(PROJDIR)/include
-LDIRS := -L$(PROJDIR)/lib/Windows64 -L$(PROJDIR)/lib/Linux64
-OSTARGET=
+DEBUG    ?= 0
+PROJDIR  := ./
+SDIRS	  = src src/systems
+BUILDDIR := $(PROJDIR)build
+IDIRS 	 := -I$(PROJDIR)include
+LDIRS 	 := -L$(PROJDIR)lib/Windows64 -L$(PROJDIR)/lib/Linux64
 
 #set compiler
 CC=g++
@@ -22,10 +21,6 @@ CPP_EXT := cpp
 
 #name of the final executable
 TARGET = crl
-
-#dependencies
-#_DEPS = $(wildcard *.h)
-#DEPS = $(patsubst %,$(IDIRS)/%,$(_DEPS))
 
 #change some os specific settings when needed
 ifeq ($(OS),Windows_NT)
@@ -48,8 +43,7 @@ endif
 PSEP = $(strip $(SEP))
 
 #create list of source directories
-DIRS=src
-SOURCEDIRS = $(foreach dir, $(DIRS), $(addprefix $(SOURCEDIR)/, $(dir)))
+SOURCEDIRS = $(foreach dir, $(SDIRS), $(addprefix $(PROJDIR), $(dir)))
 
 #determine if to build debug or release
 ifeq ($(DEBUG),1)
@@ -63,7 +57,7 @@ else
 endif
 
 #set target directories
-TARGETDIRS = $(foreach dir, $(DIRS), $(addprefix $(ABUILDDIR)/, $(dir)))
+TARGETDIRS = $(foreach dir, $(SDIRS), $(addprefix $(ABUILDDIR)/, $(dir)))
 
 #add sources and object locations
 SOURCES = $(foreach dir,$(SOURCEDIRS),$(wildcard $(dir)/*.$(CPP_EXT))) 

@@ -5,7 +5,7 @@
  *      Author: joshua
  */
 
-#include "inputsystem.h"
+#include "systems/inputsystem.h"
 #include "components.h"
 #include "BearLibTerminal.h"
 #include "ecs.h"

@@ -6,7 +6,7 @@
 
 #include "ecs.h"
 #include "components.h"
-#include "systems.h"
+#include "systems/systems.h"
 #include "logger.h"
 
 #include "tiles.h"
@@ -85,6 +85,9 @@ void Application::update()
 
 void Application::renderFrame()
 {
+	//Clear whole terminal for now
+	terminal_clear();
+
 	map.render();
 	ecs.update(1.0f);
 

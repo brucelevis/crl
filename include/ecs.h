@@ -5,8 +5,8 @@
 #include <cstdint>
 
 #include "components.h"
-#include "isystem.h"
-#include "systemmessages.h"
+#include "systems/isystem.h"
+#include "systems/systemmessages.h"
 
 /*!
 * Contains and creates entities + their component keys

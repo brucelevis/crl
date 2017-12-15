@@ -1,0 +1,80 @@
+#set project directories
+PROJDIR := .
+SOURCEDIR := $(PROJDIR)
+BUILDDIR := $(PROJDIR)/build
+IDIR := $(PROJDIR)/include
+ODIR := $(PROJDIR)/obj
+
+#create list of source directories
+DIRS= src
+SOURCEDIRS=$(foreach dir, $(DIRS), $(addprefix $(SOURCEDIR)/, $(dir)))
+
+#set compiler
+CC=g++
+
+#set flags
+CFLAGS=-I$(IDIR) -std=c++11 -Wall -Werror
+OSFLAGS=
+
+#set libs
+LIBS=-lBearLibTerminal
+
+#set extension
+CPP_EXT := cpp
+
+#change some os specific settings when needed
+ifeq ($(OS),Windows_NT)
+	LDIR =lib/Windows64
+	OUTDIR += /Win64
+	OSFLAGS += -mwindows
+	
+	#cmd /E:ON /C mkdir $(ODIR)
+	#cmd /E:ON /C mkdir $(ODIR)
+else
+	LIBS += -lfreetype2 -lpicopng -lGL -lX11 -ldl
+	LDIR =lib/Linux64
+	OUTDIR += /Linux64
+	
+	#mkdir -p $(ODIR)
+	#mkdir -p $(OUTDIR)
+endif
+
+all: CFLAGS += -O2 -DNDEBUG
+all: CFLAGS += $(OSFLAGS)
+all: crl
+
+debug: CFLAGS += -DDEBUG -g
+debug: crl
+
+_DEPS = $(wildcard *.h)
+DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+
+_OBJ = $(foreach dir,$(SOURCEDIRS),$(wildcard $(dir)/*.$(CPP_EXT))) 
+#$(wildcard $(SRCDIR)/*.cpp)
+OBJ = $(subst $(SOURCEDIR),$(BUILDDIR),$(_OBJ:.$(CPP_EXT)=.o))
+#$(patsubst %.$(CPP_EXT),$(ODIR)/%.o,$(_OBJ))
+#$(subst $(SRCDIR),$(ODIR),$(_OBJ:.cpp=.o)) 
+#$(patsubst %.cpp,$(ODIR)/%.o,$(_OBJ))
+
+$(ODIR)/%.o: %.$(CPP_EXT) $(DEPS)
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+crl: $(OBJ)
+	$(CC) -o $@ $^ $(CFLAGS) -L$(LDIR) $(LIBS)
+
+.PHONY: clean
+clean:
+ifeq ($(OS),Linux)
+	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
+else
+	del $(ODIR)\*.o
+endif
+
+ifeq ($(PREFIX),)
+    PREFIX := /usr/local
+endif
+
+.PHONY: install
+install: crl
+	install -d $(PREFIX)/lib
+	install -m 644 $(LDIR)/*.so $(PREFIX)/lib

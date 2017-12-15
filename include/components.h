@@ -1,4 +1,12 @@
-#pragma once
+/*
+ * inputsystem.h
+ *
+ *  Created on: Dec 15, 2017
+ *      Author: joshua
+ */
+
+#ifndef INCLUDE_COMPONENTS_H_
+#define INCLUDE_COMPONENTS_H_
 
 #include "BearLibTerminal.h"
 
@@ -60,3 +68,6 @@ namespace Component
 	extern bool hasComponent(uint16_t cbits, Type t);
 	extern TComponentPtr createNew(Type componentType);
 }
+
+#endif /* INCLUDE_COMPONENTS_H_ */
+

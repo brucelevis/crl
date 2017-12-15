@@ -1,4 +1,12 @@
-#pragma once
+/*
+ * inputsystem.h
+ *
+ *  Created on: Dec 15, 2017
+ *      Author: joshua
+ */
+
+#ifndef INCLUDE_ECS_H_
+#define INCLUDE_ECS_H_
 
 #include <vector>
 #include <map>
@@ -134,3 +142,6 @@ private:
 	*/
 	void checkSystemInterests(uint64_t entity);
 };
+
+#endif /* INCLUDE_ECS_H_ */
+

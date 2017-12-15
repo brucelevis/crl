@@ -1,4 +1,12 @@
-#pragma once
+/*
+ * inputsystem.h
+ *
+ *  Created on: Dec 15, 2017
+ *      Author: joshua
+ */
+
+#ifndef INCLUDE_COMPONENTCONTAINER_H_
+#define INCLUDE_COMPONENTCONTAINER_H_
 
 #include <vector>
 #include <map>
@@ -52,3 +60,5 @@ private:
 
     ComponentContainer();
 };
+
+#endif /* INCLUDE_COMPONENTCONTAINER_H_ */

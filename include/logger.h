@@ -1,4 +1,12 @@
-#pragma once
+/*
+ * inputsystem.h
+ *
+ *  Created on: Dec 15, 2017
+ *      Author: joshua
+ */
+
+#ifndef INCLUDE_LOGGER_H_
+#define INCLUDE_LOGGER_H_
 
 #include <memory>
 #include <string>
@@ -58,3 +66,5 @@ private:
 
     Logger();
 };
+
+#endif /* INCLUDE_LOGGER_H_ */

@@ -1,4 +1,12 @@
-#pragma once
+/*
+ * inputsystem.h
+ *
+ *  Created on: Dec 15, 2017
+ *      Author: joshua
+ */
+
+#ifndef INCLUDE_ISYSTEM_H_
+#define INCLUDE_ISYSTEM_H_
 
 #include <cstdint>
 #include <vector>
@@ -79,3 +87,6 @@ public:
 		return (type < sys.type);
 	}
 };
+
+#endif /* INCLUDE_ISYSTEM_H_ */
+

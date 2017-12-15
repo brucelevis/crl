@@ -4,6 +4,8 @@
  *  Created on: Dec 10, 2017
  *      Author: joshua
  */
+#ifndef INCLUDE_TILES_H_
+#define INCLUDE_TILES_H_
 
 #include <cstdint>
 #include <map>
@@ -12,9 +14,6 @@
 
 #include "BearLibTerminal.h"
 #include "logger.h"
-
-#ifndef INCLUDE_TILES_H_
-#define INCLUDE_TILES_H_
 
 #define DARKEN_FACTOR 0.25f
 

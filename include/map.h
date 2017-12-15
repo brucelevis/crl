@@ -5,10 +5,10 @@
  *      Author: joshua
  */
 
-#include <cstdint>
-
 #ifndef INCLUDE_MAP_H_
 #define INCLUDE_MAP_H_
+
+#include <cstdint>
 
 class Map
 {

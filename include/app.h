@@ -1,4 +1,12 @@
-#pragma once
+/*
+ * inputsystem.h
+ *
+ *  Created on: Dec 15, 2017
+ *      Author: joshua
+ */
+
+#ifndef INCLUDE_APP_H_
+#define INCLUDE_APP_H_
 
 class Application
 {
@@ -18,3 +26,5 @@ private:
 	
 	void mainloop();
 };
+
+#endif /* INCLUDE_APP_H_ */

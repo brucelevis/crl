@@ -8,11 +8,10 @@
 #ifndef INCLUDE_COMPONENTS_H_
 #define INCLUDE_COMPONENTS_H_
 
-#include "BearLibTerminal.h"
-
 #include <cstdint>
 #include <memory>
 #include <map>
+#include "console/iconsole.h"
 
 namespace Component
 {
@@ -46,10 +45,10 @@ namespace Component
 	
 	struct Render : public Component
 	{
-		color_t color;
+		IConsole::Color color;
 		uint16_t glyph;
 		
-		Render(color_t color = 0xFFFFFFFF, uint16_t glyph = '-') :
+		Render(IConsole::Color color = IConsole::Color::WHITE, uint16_t glyph = '-') :
 			Component(Type::RENDER)
 		  , color (color)
 		  , glyph (glyph)

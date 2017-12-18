@@ -1,6 +1,7 @@
 #include "systems/rendersystem.h"
+
+#include "console/iconsole.h"
 #include "components.h"
-#include "BearLibTerminal.h"
 #include "ecs.h"
 
 RenderSystem::RenderSystem() :
@@ -26,7 +27,7 @@ RenderSystem::~RenderSystem()
 		auto r_comp =
 			std::static_pointer_cast<Component::Render>(components[Component::Type::RENDER]);
 
-		terminal_color(r_comp->color);
-		terminal_put(p_comp->x, p_comp->y, r_comp->glyph);
+		IConsole::Instance()->set_color(r_comp->color);
+		IConsole::Instance()->set_char(p_comp->x, p_comp->y, r_comp->glyph);
 	}
 }

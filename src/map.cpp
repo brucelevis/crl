@@ -9,6 +9,8 @@
 #include "logger.h"
 #include "map.h"
 
+#include "console/iconsole.h"
+
 Map::Map() :
 	initialized(false)
 {
@@ -58,13 +60,13 @@ void Map::render()
 
 			if(visibility_map[x][y] == Visibility::VISIBLE)
 			{
-				terminal_color(def.color);
-				terminal_put(x, y, def.glyph);
+				IConsole::Instance()->set_color(def.color);
+				IConsole::Instance()->set_char(x, y, def.glyph);
 			}
 			else if(visibility_map[x][y] == Visibility::SEEN)
 			{
-				terminal_color(def.darker_color);
-				terminal_put(x, y, def.glyph);
+				IConsole::Instance()->set_color(def.darker_color);
+				IConsole::Instance()->set_char(x, y, def.glyph);
 			}
 
 		}

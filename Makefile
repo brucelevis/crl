@@ -1,7 +1,7 @@
 #set project directories
 DEBUG    ?= 0
 PROJDIR  := ./
-SDIRS	  = src src/systems
+SDIRS	  = src src/systems src/console
 BUILDDIR := $(PROJDIR)build
 IDIRS 	 := -I$(PROJDIR)include
 LDIRS 	 := -L$(PROJDIR)lib/Windows64 -L$(PROJDIR)/lib/Linux64
@@ -14,7 +14,7 @@ CFLAGS=$(IDIRS) -std=c++11 -Wall -Werror
 OSFLAGS=
 
 #set libs
-LIBS=-lBearLibTerminal
+LIBS=-lcurses -lBearLibTerminal
 
 #set extension
 CPP_EXT := cpp

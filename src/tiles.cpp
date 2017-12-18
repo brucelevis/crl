@@ -16,7 +16,7 @@ namespace Tiles
 		return tiledefs[defid];
 	}
 
-	void createDefinition(uint16_t defid, uint16_t flags, color_t color, uint16_t glyph)
+	void createDefinition(uint16_t defid, uint16_t flags, IConsole::Color color, uint16_t glyph)
 	{
 		std::stringstream sstream;
 		sstream << "Adding tile definition: { id: " << defid << " flags: " <<  std::bitset<16>(flags)
@@ -31,15 +31,15 @@ namespace Tiles
 			Logger::Instance()->logLine(Logger::Level::LWARNING, sstream.str());
 		}
 
-		uint8_t a = 		  (color >> 24)   & 0xFF;
-		uint8_t r = (uint8_t) (((color >> 16) & 0xFF) * DARKEN_FACTOR);
-		uint8_t g = (uint8_t) (((color >> 8)  & 0xFF) * DARKEN_FACTOR);
-		uint8_t b = (uint8_t) ((color         & 0xFF) * DARKEN_FACTOR);
+//		uint8_t a = 		  (color >> 24)   & 0xFF;
+//		uint8_t r = (uint8_t) (((color >> 16) & 0xFF) * DARKEN_FACTOR);
+//		uint8_t g = (uint8_t) (((color >> 8)  & 0xFF) * DARKEN_FACTOR);
+//		uint8_t b = (uint8_t) ((color         & 0xFF) * DARKEN_FACTOR);
 
-		color_t darker_color = (a << 24) | (r << 16) | (g << 8) | b;
+		//.color_t darker_color = (a << 24) | (r << 16) | (g << 8) | b;
 
 
-		TileDefinition newDefinition { flags, color, darker_color, glyph };
+		TileDefinition newDefinition { flags, color, color, glyph };
 		tiledefs[defid] = newDefinition;
 	}
 }

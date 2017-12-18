@@ -2,8 +2,6 @@
 #include <iostream>
 #include <cstdint>
 
-#include "BearLibTerminal.h"
-
 #include "ecs.h"
 #include "components.h"
 #include "systems/systems.h"
@@ -13,6 +11,7 @@
 #include "map.h"
 
 #include "app.h"
+#include "console/iconsole.h"
 
 ECS ecs;
 Map map;
@@ -39,34 +38,12 @@ void Application::initialize()
 {
 	Logger::Instance()->logLine("initializing");
 
-	if(!terminal_open())
-	{
-		throw std::runtime_error("error initializing terminal");
-	}
-	
-	#ifndef NDEBUG 
-		const char* config = 
-			"window: title='CRL - DEBUG', size=80x25;\
-			input: alt-functions=false;\
-			log.file='terminal.log';\
-			log.level=debug;";
-	#else
-		const char* config = 
-			"window: title='CRL', size=80x25;\
-			input: alt-functions=false;\
-			log.file='terminal.log';";
-	#endif
-	
-	if(!terminal_set(config))
-	{
-		throw std::runtime_error("error setting terminal settings");
-	}
+	IConsole::allocateConsole(IConsole::ConsoleType::BEARLIBTERMINAL, 80, 24);
 }
 
 void Application::cleanup()
 {
 	Logger::Instance()->logLine("performing cleanup");
-	terminal_close();
 }
 
 void Application::update()
@@ -75,9 +52,9 @@ void Application::update()
 			, SystemMessage::TMessagePtr(
 					new SystemMessage::InputMessage(
 						last_key_pressed
-					  , terminal_check (TK_SHIFT)
-					  , terminal_check (TK_CONTROL)
-					  , terminal_check (TK_ALT)
+					  , IConsole::Instance()->getShift()
+					  , IConsole::Instance()->getControl()
+					  , IConsole::Instance()->getAlt()
 					)
 			)
 	);
@@ -86,22 +63,19 @@ void Application::update()
 void Application::renderFrame()
 {
 	//Clear whole terminal for now
-	terminal_clear();
+	IConsole::Instance()->clscr();
 
 	map.render();
 	ecs.update(1.0f);
 
-	terminal_refresh();
+	IConsole::Instance()->refresh();
 }
 
 void Application::mainloop()
 {
-	
-
-	
 	uint64_t entity = ecs.createEntity();
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(2, 2)));
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( 0xFFFFFFFF, '@')));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( IConsole::Color::WHITE, '@')));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Input()));
 
 	ecs.addSystem<RenderSystem>();
@@ -109,22 +83,20 @@ void Application::mainloop()
 	
 	entity = ecs.createEntity();
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(11, 11)));
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( 0xFF00FFFF, '!')));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( IConsole::Color::RED, '!')));
 	
-	Tiles::createDefinition(1, Tiles::Flags::BLOCKING,    0xFFFFFFFF, '#');
-	Tiles::createDefinition(2, 0, 0, 0);
-	Tiles::createDefinition(2, Tiles::Flags::TRANSPARENT, 0xFF777777, '.');
+	Tiles::createDefinition(1, Tiles::Flags::BLOCKING,    IConsole::Color::WHITE, '#');
+	Tiles::createDefinition(2, 0, IConsole::Color::WHITE, 0);
+	Tiles::createDefinition(2, Tiles::Flags::TRANSPARENT, IConsole::Color::WHITE, '.');
 
 	map.init();
 
 
-    while (last_key_pressed != TK_CLOSE)
+    while (!IConsole::Instance()->shouldClose())
 	{
 		update();
 		renderFrame();
 
-		terminal_refresh();
-
-		last_key_pressed = terminal_read();
+		last_key_pressed = IConsole::Instance()->getChar();
 	}
 }

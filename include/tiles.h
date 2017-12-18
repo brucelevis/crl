@@ -12,7 +12,7 @@
 #include <sstream>
 #include <bitset>
 
-#include "BearLibTerminal.h"
+#include "console/iconsole.h"
 #include "logger.h"
 
 #define DARKEN_FACTOR 0.25f
@@ -30,8 +30,8 @@ namespace Tiles
 	{
 		uint16_t flags;
 
-		color_t  color;
-		color_t  darker_color;
+		IConsole::Color  color;
+		IConsole::Color  darker_color;
 
 		uint16_t glyph;
 
@@ -50,7 +50,7 @@ namespace Tiles
 
 	extern const TileDefinition& getDefinition(uint16_t defid);
 
-	extern void createDefinition(uint16_t defid, uint16_t flags, color_t color, uint16_t glyph);
+	extern void createDefinition(uint16_t defid, uint16_t flags, IConsole::Color color, uint16_t glyph);
 }
 
 

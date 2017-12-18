@@ -71,7 +71,7 @@ void Logger::logLine(Level level, const std::string& str)
             break;
     }
 
-    sstream << prefix << ": " << str << std::endl;
+    sstream << prefix << ": " << str << "\r" << std::endl;
 
     printf(sstream.str().c_str());
 }

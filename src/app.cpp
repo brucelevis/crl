@@ -75,6 +75,16 @@ void Application::mainloop()
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(2, 2)));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( IConsole::Color::WHITE, '@')));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Input()));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Movement(100)));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::AIComponent(Component::AIComponent::PLAYER)));
+
+	std::map<Component::Skill::SkillType, int16_t> skills;
+	skills[Component::Skill::SkillType::ATK] = 10;
+	skills[Component::Skill::SkillType::STR] = 10;
+	skills[Component::Skill::SkillType::AGI] = 10;
+	skills[Component::Skill::SkillType::INT] = 10;
+
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Skill(skills)));
 
 	ecs.addSystem<RenderSystem>();
 	ecs.addSystem<InputSystem>();

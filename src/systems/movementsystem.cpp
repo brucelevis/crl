@@ -13,7 +13,7 @@
 #include "ecs.h"
 
 MovementSystem::MovementSystem() :
-    ISystem(Component::Type::POSITION
+    ISystem(Component::Type::POSITION | Component::Type::MOVEMENT
     		, ISystem::Type::MOVEMENT)
 {
 

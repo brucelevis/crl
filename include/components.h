@@ -19,8 +19,11 @@ namespace Component
 	{
 		NONE	 = 0,
 		POSITION = (1 << 0),
-		RENDER	 = (1 << 1),
-		INPUT	 = (1 << 2)
+		MOVEMENT = (1 << 1),
+		RENDER	 = (1 << 2),
+		INPUT	 = (1 << 3),
+		AI		 = (1 << 4),
+		SKILL	 = (1 << 5)
 	};
 
 	struct Component {
@@ -31,6 +34,7 @@ namespace Component
 		{}
 	};
 
+	//! Position component, used to track positions
 	struct Position : public Component
 	{
 		uint16_t x;
@@ -43,6 +47,18 @@ namespace Component
 		{}
 	};
 	
+	//! Movement component, used to determine if movement is possible and the speed
+	struct Movement : public Component
+	{
+		int16_t speed; /*!speed of movement */
+
+		Movement(int16_t speed) :
+			Component(Type::MOVEMENT)
+		  , speed(speed)
+		{}
+	};
+
+	//! Render component, used to render stuff
 	struct Render : public Component
 	{
 		IConsole::Color color;
@@ -55,10 +71,54 @@ namespace Component
 		{}
 	};
 
+	//! Input component, used to determine if input is possible
 	struct Input : public Component
 	{
 		Input() :
 			Component(Type::INPUT)
+		{}
+	};
+
+	//! AI component, used to determine AI type
+	struct AIComponent : public Component
+	{
+		//! AI Types
+		enum AIType
+		{
+			NONE = 0,    /*!< None */
+			DUMB,        /*!< Dumb AI, does not think about anything (just attack) */
+			ANIMAL,      /*!< Animal AI, thinks some more, could decide to run for instance */
+			INTELLIGENT, /*!< Intelligent AI, can speak/cast spells etc. */
+			OMNISCIENT,  /*!< Omniscient AI, is perfect */
+			PLAYER       /*!< Used for the player */
+		};
+
+		AIType ai_type; /*! Determines the type of ai */
+
+		AIComponent(AIType ai_type) :
+			Component(Type::AI)
+		  , ai_type(ai_type)
+		{}
+	};
+
+	//! Skill component, used for determining possible actions/results etc.
+	struct Skill : public Component
+	{
+		//! Skill types
+		enum SkillType
+		{
+			None = 0, /*!< None */
+			ATK,      /*!< Attack, used for accuracy/attack speed etc. */
+			STR,      /*!< Strength, used to determine power */
+			AGI,      /*!< Agility, used to determine speed etc. */
+			INT       /*!< Intelligence, used for various intellect checks etc. Influences mana. */
+		};
+
+		std::map<SkillType, int16_t> skills; /*! Skills container, used to keep track of skill values */
+
+		Skill(std::map<SkillType, int16_t> skills) :
+			Component(Type::SKILL)
+		  , skills(skills)
 		{}
 	};
 

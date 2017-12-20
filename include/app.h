@@ -15,11 +15,11 @@ public:
 	~Application();
 	
 	int run();
+	void cleanup();
 private:
 	int last_key_pressed;
 
 	void initialize();
-	void cleanup();
 	
 	void update();
 	void renderFrame();

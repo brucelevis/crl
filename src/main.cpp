@@ -33,6 +33,7 @@ int main(int argc, char** argv)
 		}
 	
 		result = app.run();
+		app.cleanup();
 	}
 	catch(std::runtime_error& e)
 	{
@@ -52,6 +53,6 @@ int main(int argc, char** argv)
 
 		return 1;
 	}
-	
+
 	return result;
 }

@@ -21,7 +21,7 @@ Application::Application() :
 
 Application::~Application()
 {
-	cleanup();
+
 }
 
 int Application::run()
@@ -42,6 +42,7 @@ void Application::initialize()
 void Application::cleanup()
 {
 	Logger::Instance()->logLine("performing cleanup");
+	IConsole::Instance()->cleanup();
 }
 
 void Application::update()

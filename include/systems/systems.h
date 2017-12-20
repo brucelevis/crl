@@ -8,8 +8,9 @@
 #ifndef INCLUDE_SYSTEMS_H_
 #define INCLUDE_SYSTEMS_H_
 
-#include "rendersystem.h"
-#include "inputsystem.h"
-#include "mapsystem.h"
+#include "systems/rendersystem.h"
+#include "systems/inputsystem.h"
+#include "systems/movementsystem.h"
+#include "systems/mapsystem.h"
 
 #endif /* INCLUDE_SYSTEMS_H_ */

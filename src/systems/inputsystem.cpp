@@ -72,12 +72,9 @@ void InputSystem::handleMessage(SystemMessage::TMessagePtr message, uint64_t ent
 
 		if(dx != 0 || dy != 0)
 		{
-			auto p_comp = ecs->getComponent<Component::Position>(entity, Component::Type::POSITION);
-			if(p_comp)
-			{
-				p_comp->x += dx;
-				p_comp->y += dy;
-			}
+			// send the "I like to move it, move it" message
+			ecs->sendSystemMessage(ISystem::Type::MOVEMENT,
+					SystemMessage::TMessagePtr(new SystemMessage::MovementMessage(entity, dx, dy)));
 		}
 	}
 }

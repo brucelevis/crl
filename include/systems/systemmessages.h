@@ -15,7 +15,8 @@ namespace SystemMessage
 	enum MessageType
 	{
 		NONE  = 0,
-		INPUT = (1 << 0)
+		INPUT,
+		MOVEMENT
 	};
 
 	struct Message
@@ -40,6 +41,21 @@ namespace SystemMessage
 		  , shift   (shift)
 		  , control (control)
 		  , alt     (alt)
+		{}
+	};
+
+	struct MovementMessage : public Message
+	{
+		uint64_t entity;
+
+		int delta_x;
+		int delta_y;
+
+		MovementMessage(uint64_t entity, int delta_x, int delta_y) :
+			Message(MessageType::MOVEMENT)
+		  ,	entity(entity)
+		  , delta_x(delta_x)
+		  , delta_y(delta_y)
 		{}
 	};
 

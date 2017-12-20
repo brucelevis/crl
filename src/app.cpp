@@ -77,6 +77,7 @@ void Application::mainloop()
 
 	ecs.addSystem<RenderSystem>();
 	ecs.addSystem<InputSystem>();
+	ecs.addSystem<MovementSystem>();
 	ecs.addSystem<MapSystem>();
 	
 	ecs.setPlayerId(entity);

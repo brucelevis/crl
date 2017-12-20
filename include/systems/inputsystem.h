@@ -10,8 +10,8 @@
 
 #include <cstdint>
 
-#include "systemmessages.h"
-#include "isystem.h"
+#include "systems/systemmessages.h"
+#include "systems/isystem.h"
 
 class ECS;
 

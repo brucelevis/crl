@@ -42,6 +42,8 @@ int main(int argc, char** argv)
 
 		Logger::Instance()->logLine(Logger::Level::LCRITICAL, sstream.str());
 
+		app.cleanup();
+
 		return 1;
 	}
 	catch(std::exception& e)
@@ -50,6 +52,8 @@ int main(int argc, char** argv)
 		sstream << "fatal exception: " << e.what();
 
 		Logger::Instance()->logLine(Logger::Level::LCRITICAL, sstream.str());
+
+		app.cleanup();
 
 		return 1;
 	}

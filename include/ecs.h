@@ -138,6 +138,12 @@ public:
 	 * \return An shared_ptr to the current map
 	 */
 	std::shared_ptr<Map> getMap() const;
+
+	//! Determine if an entity exists
+	/*!
+	 * \return True if the entity exists, otherwise false
+	 */
+	bool entityExists(uint64_t entity) const;
 private:
 	static uint64_t current_max_id; /*! Current max id used */
 

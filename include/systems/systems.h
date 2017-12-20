@@ -12,5 +12,6 @@
 #include "systems/inputsystem.h"
 #include "systems/movementsystem.h"
 #include "systems/mapsystem.h"
+#include "systems/aisystem.h"
 
 #endif /* INCLUDE_SYSTEMS_H_ */

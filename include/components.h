@@ -23,7 +23,8 @@ namespace Component
 		RENDER	 = (1 << 2),
 		INPUT	 = (1 << 3),
 		AI		 = (1 << 4),
-		SKILL	 = (1 << 5)
+		SKILL	 = (1 << 5),
+		TARGET	 = (1 << 6)
 	};
 
 	struct Component {
@@ -119,6 +120,17 @@ namespace Component
 		Skill(std::map<SkillType, int16_t> skills) :
 			Component(Type::SKILL)
 		  , skills(skills)
+		{}
+	};
+
+	//! Target component, used to target other entities
+	struct Target : public Component
+	{
+		uint64_t target; /*! Target entity */
+
+		Target(uint64_t target) :
+			Component(Type::TARGET)
+		  , target(target)
 		{}
 	};
 

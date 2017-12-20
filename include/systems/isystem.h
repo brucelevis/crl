@@ -21,6 +21,7 @@ public:
 	{
 		NONE = 0,
 		INPUT,
+		AI,
 		MOVEMENT,
 		MAP,
 		RENDER

@@ -88,6 +88,7 @@ void Application::mainloop()
 
 	ecs.addSystem<RenderSystem>();
 	ecs.addSystem<InputSystem>();
+	ecs.addSystem<AISystem>();
 	ecs.addSystem<MovementSystem>();
 	ecs.addSystem<MapSystem>();
 	
@@ -97,6 +98,11 @@ void Application::mainloop()
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(11, 11)));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( IConsole::Color::RED, '!')));
 	
+	entity = ecs.createEntity();
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(9, 9)));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( IConsole::Color::BLUE, '1')));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::AIComponent(Component::AIComponent::DUMB)));
+
 	Tiles::createDefinition(1, Tiles::Flags::BLOCKING,    IConsole::Color::WHITE, '#');
 	Tiles::createDefinition(2, 0, IConsole::Color::WHITE, 0);
 	Tiles::createDefinition(2, Tiles::Flags::TRANSPARENT, IConsole::Color::GREY, '.');

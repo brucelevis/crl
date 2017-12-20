@@ -172,6 +172,11 @@ std::map<Component::Type, Component::TComponentPtr>& ECS::getComponents(uint64_t
 	return entity_component_map[entity];
 }
 
+bool ECS::entityExists(uint64_t entity) const
+{
+	return std::find(entities.begin(), entities.end(), entity) != entities.end();
+}
+
 void ECS::update(float delta)
 {
 	for(auto system : systems)

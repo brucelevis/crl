@@ -25,13 +25,15 @@ public:
 	//! Console colors
 	enum Color
 	{
-		RED 	= 1,
-		GREEN 	= 2,
-		YELLOW 	= 3,
-		BLUE 	= 4,
-		CYAN 	= 5,
-		MAGENTA = 6,
-		WHITE 	= 7
+		RED 		= 1,
+		GREEN 		= 2,
+		YELLOW 		= 3,
+		BLUE 		= 4,
+		CYAN 		= 5,
+		MAGENTA 	= 6,
+		WHITE 		= 7,
+		GREY		= 8,
+		DARK_GREY 	= 9
 	};
 
 

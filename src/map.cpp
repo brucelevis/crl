@@ -34,7 +34,7 @@ void Map::init()
 				tiles[x][y] = 2;
 			}
 
-			visibility_map[x][y] = Visibility::SEEN;
+			visibility_map[x][y] = Visibility::VISIBLE;
 		}
 	}
 

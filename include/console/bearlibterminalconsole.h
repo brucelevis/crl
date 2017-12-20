@@ -8,7 +8,9 @@
 #ifndef INCLUDE_CONSOLE_BEARLIBTERMINALCONSOLE_H_
 #define INCLUDE_CONSOLE_BEARLIBTERMINALCONSOLE_H_
 
+#include <BearLibTerminal.h>
 #include <cstdint>
+#include <map>
 #include "console/iconsole.h"
 
 class BearLibTerminalConsole : public IConsole
@@ -38,6 +40,8 @@ public:
 
 private:
 	int last_pressed_key;
+
+	std::map<Color, color_t> color_map;
 };
 
 

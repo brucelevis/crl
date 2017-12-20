@@ -87,7 +87,7 @@ void Application::mainloop()
 	
 	Tiles::createDefinition(1, Tiles::Flags::BLOCKING,    IConsole::Color::WHITE, '#');
 	Tiles::createDefinition(2, 0, IConsole::Color::WHITE, 0);
-	Tiles::createDefinition(2, Tiles::Flags::TRANSPARENT, IConsole::Color::WHITE, '.');
+	Tiles::createDefinition(2, Tiles::Flags::TRANSPARENT, IConsole::Color::GREY, '.');
 
 	map.init();
 

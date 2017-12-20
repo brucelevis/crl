@@ -39,7 +39,7 @@ namespace Tiles
 		//.color_t darker_color = (a << 24) | (r << 16) | (g << 8) | b;
 
 
-		TileDefinition newDefinition { flags, color, color, glyph };
+		TileDefinition newDefinition { flags, color, IConsole::Color::DARK_GREY, glyph };
 		tiledefs[defid] = newDefinition;
 	}
 }

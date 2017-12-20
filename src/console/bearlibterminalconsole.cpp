@@ -5,8 +5,6 @@
  *      Author: joshua
  */
 
-#include <BearLibTerminal.h>
-
 #include "console/bearlibterminalconsole.h"
 #include "logger.h"
 
@@ -44,6 +42,16 @@ BearLibTerminalConsole::BearLibTerminalConsole(uint16_t width, uint16_t height) 
 		return false;
 	}
 
+	color_map[Color::RED] 		= 0xFFFF0000;
+	color_map[Color::GREEN] 	= 0xFF00FF00;
+	color_map[Color::YELLOW] 	= 0xFFFFFF00;
+	color_map[Color::BLUE] 		= 0xFF0000FF;
+	color_map[Color::CYAN] 		= 0xFF00FFFF;
+	color_map[Color::MAGENTA] 	= 0xFFFF00FF;
+	color_map[Color::WHITE] 	= 0xFFFFFFFF;
+	color_map[Color::GREY] 		= 0xFF969696;
+	color_map[Color::DARK_GREY] = 0xFF323232;
+
 	return true;
 }
 
@@ -54,7 +62,7 @@ BearLibTerminalConsole::BearLibTerminalConsole(uint16_t width, uint16_t height) 
 
 /* virtual */ void BearLibTerminalConsole::set_color(Color color)
 {
-
+	terminal_color(color_map[color]);
 }
 
 /* virtual */ void BearLibTerminalConsole::set_char(uint16_t x, uint16_t y, uint16_t ch)

@@ -8,7 +8,7 @@
 #ifndef INCLUDE_RENDERSYSTEM_H_
 #define INCLUDE_RENDERSYSTEM_H_
 
-#include "isystem.h"
+#include "systems/isystem.h"
 
 class RenderSystem : public ISystem
 {

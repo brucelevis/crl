@@ -8,13 +8,11 @@
 #include "logger.h"
 
 #include "tiles.h"
-#include "map.h"
 
 #include "app.h"
 #include "console/iconsole.h"
 
 ECS ecs;
-Map map;
 
 Application::Application() :
 	last_key_pressed(0)
@@ -65,7 +63,6 @@ void Application::renderFrame()
 	//Clear whole terminal for now
 	IConsole::Instance()->clscr();
 
-	map.render();
 	ecs.update(1.0f);
 
 	IConsole::Instance()->refresh();
@@ -80,7 +77,10 @@ void Application::mainloop()
 
 	ecs.addSystem<RenderSystem>();
 	ecs.addSystem<InputSystem>();
+	ecs.addSystem<MapSystem>();
 	
+	ecs.setPlayerId(entity);
+
 	entity = ecs.createEntity();
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(11, 11)));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( IConsole::Color::RED, '!')));
@@ -88,8 +88,6 @@ void Application::mainloop()
 	Tiles::createDefinition(1, Tiles::Flags::BLOCKING,    IConsole::Color::WHITE, '#');
 	Tiles::createDefinition(2, 0, IConsole::Color::WHITE, 0);
 	Tiles::createDefinition(2, Tiles::Flags::TRANSPARENT, IConsole::Color::GREY, '.');
-
-	map.init();
 
 
     while (!IConsole::Instance()->shouldClose())

@@ -50,7 +50,7 @@ BearLibTerminalConsole::BearLibTerminalConsole(uint16_t width, uint16_t height) 
 	color_map[Color::MAGENTA] 	= 0xFFFF00FF;
 	color_map[Color::WHITE] 	= 0xFFFFFFFF;
 	color_map[Color::GREY] 		= 0xFF969696;
-	color_map[Color::DARK_GREY] = 0xFF323232;
+	color_map[Color::DARK_GREY] = 0xFF121212;
 
 	return true;
 }

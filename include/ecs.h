@@ -15,6 +15,7 @@
 #include "components.h"
 #include "systems/isystem.h"
 #include "systems/systemmessages.h"
+#include "map.h"
 
 /*!
 * Contains and creates entities + their component keys
@@ -77,7 +78,7 @@ public:
 		std::sort(systems.begin(), systems.end(),
 			[] (const std::shared_ptr<ISystem>& a, const std::shared_ptr<ISystem>& b)
 			{
-				return a->getType() < b->getType();
+				return (uint32_t)a->getType() < (uint32_t)b->getType();
 			});
 	}
 	
@@ -86,7 +87,7 @@ public:
 	* \param delta Deltatime since last update
 	*/
 	void update(float delta);
-	
+
 	//! Get keymap of entity
 	/*!
 	* \param entity The entity ID to get the keymap for
@@ -119,6 +120,24 @@ public:
 	 * \return The messages for the intended system
 	 */
 	const std::vector<SystemMessage::TMessagePtr>& getMessages(ISystem::Type type);
+
+	//! Sets the player entity for easy acces
+	/*!
+	 * \param id The ID of the player entity
+	 */
+	void setPlayerId(uint64_t id);
+
+	//! Gets the player entity ID
+	/*!
+	 * \return The entity ID of the player
+	 */
+	const uint64_t getPlayerId() const;
+
+	//! Returns an std::shared_ptr to the current map
+	/*!
+	 * \return An shared_ptr to the current map
+	 */
+	std::shared_ptr<Map> getMap() const;
 private:
 	static uint64_t current_max_id; /*! Current max id used */
 
@@ -130,6 +149,11 @@ private:
 	std::map<ISystem::Type, std::vector<SystemMessage::TMessagePtr>> system_messages; /*! Messages sent between systems */
 	std::vector<std::shared_ptr<ISystem>> systems; /*! List of systems */
 	
+	std::shared_ptr<Map> map_ptr; /*! shared_ptr to current map object used by game */
+
+
+	uint64_t player_id; /*! Player ID kept for easy access */
+
 	//! Creates a new ID
 	/*!
 	* \return The newly created ID

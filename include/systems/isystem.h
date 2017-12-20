@@ -21,6 +21,7 @@ public:
 	{
 		NONE = 0,
 		INPUT,
+		MAP,
 		RENDER
 	};
 
@@ -59,8 +60,11 @@ public:
 	* \param entity The entity to add
 	*/
 	inline virtual void addInterest(uint64_t entity) {
-		interested_entities.push_back(entity);
-		std::sort(interested_entities.begin(), interested_entities.end());
+		if(std::find(interested_entities.begin(), interested_entities.end(), entity) == interested_entities.end())
+		{
+			interested_entities.push_back(entity);
+			std::sort(interested_entities.begin(), interested_entities.end());
+		}
 	}
 	
 	//! Removes an entity that the system is no longer interested in

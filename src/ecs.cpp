@@ -4,11 +4,17 @@
 
 #include "logger.h"
 #include "ecs.h"
+#include "map.h"
 
 /* static */ uint64_t ECS::current_max_id = 0;
 
-ECS::ECS()
+ECS::ECS() :
+	player_id(0)
 {
+	map_ptr = std::make_shared<Map>();
+
+	if(map_ptr)
+		map_ptr->init();
 }
 
 ECS::~ECS()
@@ -141,6 +147,24 @@ uint64_t ECS::getEntityKey(uint64_t entity) const
 		return iter->second;
 	}
 	return 0;
+}
+
+void ECS::setPlayerId(uint64_t id)
+{
+	if(std::find(entities.begin(), entities.end(), id) != entities.end())
+	{
+		player_id = id;
+	}
+}
+
+const uint64_t ECS::getPlayerId() const
+{
+	return player_id;
+}
+
+std::shared_ptr<Map> ECS::getMap() const
+{
+	return map_ptr;
 }
 
 std::map<Component::Type, Component::TComponentPtr>& ECS::getComponents(uint64_t entity)

@@ -10,5 +10,6 @@
 
 #include "rendersystem.h"
 #include "inputsystem.h"
+#include "mapsystem.h"
 
 #endif /* INCLUDE_SYSTEMS_H_ */

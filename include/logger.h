@@ -2,7 +2,7 @@
  * inputsystem.h
  *
  *  Created on: Dec 15, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #ifndef INCLUDE_LOGGER_H_

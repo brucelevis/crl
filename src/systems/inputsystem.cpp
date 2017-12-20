@@ -2,7 +2,7 @@
  * inputsystem.cpp
  *
  *  Created on: Dec 10, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #include "systems/inputsystem.h"

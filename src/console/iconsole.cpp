@@ -2,7 +2,7 @@
  * console.cpp
  *
  *  Created on: Dec 18, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #include <exception>

@@ -2,7 +2,7 @@
  * bearlibterminalconsole.h
  *
  *  Created on: Dec 18, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #ifndef INCLUDE_CONSOLE_BEARLIBTERMINALCONSOLE_H_

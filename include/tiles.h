@@ -2,7 +2,7 @@
  * tiles.h
  *
  *  Created on: Dec 10, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 #ifndef INCLUDE_TILES_H_
 #define INCLUDE_TILES_H_

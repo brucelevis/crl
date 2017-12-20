@@ -2,7 +2,7 @@
  * aisystem.cpp
  *
  *  Created on: Dec 20, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #include <random>

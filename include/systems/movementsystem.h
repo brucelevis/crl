@@ -2,7 +2,7 @@
  * movementsystem.h
  *
  *  Created on: Dec 20, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #ifndef INCLUDE_SYSTEMS_MOVEMENTSYSTEM_H_

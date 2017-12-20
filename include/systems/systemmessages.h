@@ -2,7 +2,7 @@
  * systemmessages.h
  *
  *  Created on: Dec 10, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #ifndef INCLUDE_SYSTEMMESSAGES_H_

@@ -2,7 +2,7 @@
  * inputsystem.h
  *
  *  Created on: Dec 10, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #ifndef INCLUDE_INPUTSYSTEM_H_

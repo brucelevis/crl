@@ -2,7 +2,7 @@
  * console.h
  *
  *  Created on: Dec 16, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #ifndef INCLUDE_ICONSOLE_H_

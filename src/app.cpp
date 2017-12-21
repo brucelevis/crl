@@ -12,6 +12,8 @@
 #include "app.h"
 #include "console/iconsole.h"
 
+#include "randomgenerator.h"
+
 ECS ecs;
 
 Application::Application() :
@@ -107,6 +109,27 @@ void Application::mainloop()
 	Tiles::createDefinition(2, 0, IConsole::Color::WHITE, 0);
 	Tiles::createDefinition(2, Tiles::Flags::TRANSPARENT, IConsole::Color::GREY, '.');
 
+	RandomGenerator::create(0xFF11FF22AA33AA44);
+	auto rng = RandomGenerator::Instance();
+
+	std::cout << rng->randDelta() << std::endl;
+	std::cout << rng->randDelta(true) << std::endl;
+	std::cout << rng->randDelta() << std::endl;
+	std::cout << rng->randDelta() << std::endl;
+	std::cout << rng->randDelta() << std::endl;
+	std::cout << rng->randDelta() << std::endl;
+	std::cout << rng->randDelta() << std::endl;
+	std::cout << rng->randDelta() << std::endl;
+	std::cout << rng->randBool() << std::endl;
+	std::cout << rng->randBool(75) << std::endl;
+	std::cout << rng->randBool(75, true) << std::endl;
+	std::cout << rng->randBool() << std::endl;
+	std::cout << rng->randBetween(0, 5555, true) << std::endl;
+	std::cout << rng->randBetween(-10000, 7776, true) << std::endl;
+	std::cout << rng->randBetween(-10000, 7776) << std::endl;
+	std::cout << rng->randFloat(-1.0f, 1.0f) << std::endl;
+	std::cout << rng->randBetween(-100.0f, 10.0f) << std::endl;
+	std::cout << rng->randBetween(-100.0f, 10.0f, true) << std::endl;
 
     while (!IConsole::Instance()->shouldClose())
 	{

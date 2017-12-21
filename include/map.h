@@ -22,24 +22,28 @@ public:
 		SEEN      = (1 << 1)
 	};
 
-	Map();
+	Map(uint16_t width, uint16_t height);
+	~Map();
 
 	void init();
+	void cleanUp();
 	void calculateFOV(uint16_t x, uint16_t y);
 	void update(ECS* ecs, float delta);
 	void render();
+
 
 	bool isSolid(uint16_t x, uint16_t y) const;
 	bool isOpaque(uint16_t x, uint16_t y) const;
 	bool isVisible(uint16_t x, uint16_t y) const;
 private:
-	static const uint16_t width  = 40;
-	static const uint16_t height = 24;
+	uint16_t width;
+	uint16_t height;
 
 	bool initialized;
+	bool cleaned;
 
-	uint16_t   tiles           [width][height];
-	Visibility visibility_map  [width][height];
+	uint16_t**   tiles;
+	Visibility** visibility_map;
 
 	void castLight(
 			uint16_t x, uint16_t y,
@@ -47,6 +51,8 @@ private:
 			float start_slope, float end_slope,
 			int16_t xx, int16_t xy,
 			int16_t yx, int16_t yy);
+
+	friend class MapGenerator;
 };
 
 

@@ -26,6 +26,9 @@ public:
 	ECS();
 	~ECS();
 	
+	//! Cleanup method
+	void cleanUp();
+
 	//! Destroys an entity
 	/*!
 	* \param id The ID of the entity to destroy

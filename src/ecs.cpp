@@ -6,19 +6,36 @@
 #include "ecs.h"
 #include "map.h"
 
+#include "generators/mapgenerator.h"
+
 /* static */ uint64_t ECS::current_max_id = 0;
 
 ECS::ECS() :
 	player_id(0)
 {
-	map_ptr = std::make_shared<Map>();
+	MapGeneratorConfig config;
 
-	if(map_ptr)
-		map_ptr->init();
+	config.min_width  = 35;
+	config.max_width  = 40;
+	config.min_height = 16;
+	config.max_height = 20;
+	config.max_bsp_recursion = 4;
+	config.type       = MapGeneratorConfig::DUNGEON;
+
+	MapGenerator mgen(config);
+
+	map_ptr = mgen.generate();
 }
 
 ECS::~ECS()
 {
+}
+
+void ECS::cleanUp()
+{
+	Logger::Instance()->logLine("ECS cleanup");
+
+	if(map_ptr) map_ptr->cleanUp();
 }
 
 /*const std::vector<uint64_t>& EntityContainer::getEntities() const

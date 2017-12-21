@@ -8,8 +8,10 @@
 #include <cfloat>
 #include <exception>
 #include <ctime>
+#include <sstream>
 
 #include "randomgenerator.h"
+#include "logger.h"
 
 /* static */ bool RandomGenerator::created = false;
 
@@ -28,6 +30,13 @@ RandomGenerator::RandomGenerator(uint_least64_t seed) :
 /* static */ void RandomGenerator::create(uint_least64_t seed)
 {
 	random_generator = std::shared_ptr<RandomGenerator>(new RandomGenerator(seed));
+
+	std::stringstream sstream;
+	sstream << "Created RandomGenerator with main seed '" << seed
+			<< "', map_seed: '" << random_generator->map_seed
+			<< "' and global_seed: '" << random_generator->global_seed << "'";
+
+	Logger::Instance()->logLine(Logger::Level::LINFO, sstream.str());
 
 	created = true;
 }

@@ -1,7 +1,7 @@
 #set project directories
 DEBUG    ?= 0
 PROJDIR  := ./
-SDIRS	  = src src/systems src/console
+SDIRS	  = src src/systems src/console src/generators
 BUILDDIR := $(PROJDIR)build
 IDIRS 	 := -I$(PROJDIR)include
 LDIRS 	 := -L$(PROJDIR)lib/Windows64 -L$(PROJDIR)/lib/Linux64

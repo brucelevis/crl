@@ -14,38 +14,58 @@
 
 #include "console/iconsole.h"
 
-Map::Map() :
-	initialized(false)
+Map::Map(uint16_t width, uint16_t height) :
+    width(width)
+  , height(height)
+  , initialized(false)
+  , cleaned(false)
+  , tiles(nullptr)
+  , visibility_map(nullptr)
 {
 
+}
+
+Map::~Map()
+{
+	if(!cleaned)
+		cleanUp();
 }
 
 void Map::init()
 {
 	Logger::Instance()->logLine("initializing map");
 
-	for(int x = 0; x < width; ++ x)
-	{
-		for(int y = 0; y < height; ++y)
-		{
-			if(x == 0 || y  == 0 || x == width - 1 || y == height - 1)
-			{
-				tiles[x][y] = 1;
-			}
-			else if(x % 4 == 0 && y % 4 == 0)
-			{
-				tiles[x][y] = 1;
-			}
-			else
-			{
-				tiles[x][y] = 2;
-			}
+	tiles          = new uint16_t*  [width];
+	visibility_map = new Visibility*[width];
 
-			visibility_map[x][y] = Visibility::INVISIBLE;
-		}
+	for(int i = 0; i < width; ++i)
+	{
+		tiles[i]          = new uint16_t[height];
+		visibility_map[i] = new Visibility[height];
 	}
 
 	initialized = true;
+}
+
+void Map::cleanUp()
+{
+	Logger::Instance()->logLine("map cleanup");
+
+	if(tiles) {
+		for(int i = 0; i < width; ++i)
+			delete[] tiles[i];
+
+		delete tiles;
+	}
+
+	if(visibility_map) {
+		for(int i = 0; i < width; ++i)
+			delete[] visibility_map[i];
+
+		delete visibility_map;
+	}
+
+	cleaned  = true;
 }
 
 void Map::update(ECS* ecs, float delta)

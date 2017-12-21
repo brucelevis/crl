@@ -10,6 +10,7 @@
 
 #include "components.h"
 #include "ecs.h"
+#include "randomgenerator.h"
 
 AISystem::AISystem() :
     ISystem(Component::Type::AI
@@ -68,16 +69,12 @@ void AISystem::runDumbAI(ECS* ecs, uint64_t entity, float delta)
 	}
 	else
 	{
-	    // Seed with a real random value, if available
-	    std::random_device r;
-
-	    // Choose a random mean between 1 and 6
-	    std::default_random_engine e1(r());
-	    std::uniform_int_distribution<int> uniform_dist(-1, 1);
+		int dx = RandomGenerator::Instance()->randDelta();
+		int dy = RandomGenerator::Instance()->randDelta();
 
 	    // move randomly
 		ecs->sendSystemMessage(ISystem::Type::MOVEMENT,
-				SystemMessage::TMessagePtr(new SystemMessage::MovementMessage(entity, uniform_dist(e1), uniform_dist(e1))));
+				SystemMessage::TMessagePtr(new SystemMessage::MovementMessage(entity, dx, dy)));
 	}
 }
 

@@ -17,6 +17,8 @@
 #include "systems/systemmessages.h"
 #include "map.h"
 
+#include "deprecated.h"
+
 /*!
 * Contains and creates entities + their component keys
 */
@@ -131,13 +133,13 @@ public:
 	/*!
 	 * \param id The ID of the player entity
 	 */
-	void setPlayerId(uint64_t id);
+	DEPRECATED void setPlayerId(uint64_t id);
 
 	//! Gets the player entity ID
 	/*!
 	 * \return The entity ID of the player
 	 */
-	const uint64_t getPlayerId() const;
+	DEPRECATED const uint64_t getPlayerId() const;
 
 	//! Sets the active camera
 	/*!

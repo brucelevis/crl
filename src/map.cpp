@@ -82,9 +82,11 @@ void Map::update(ECS* ecs, float delta)
 {
 	if(!initialized) throw std::runtime_error("map not initialized!");
 
-	uint64_t player_id = ecs->getPlayerId();
-	if(player_id != 0)
+	auto p_comps = ecs->getEntitiesWithComponent(Component::PLAYER);
+	if(!p_comps.empty())
 	{
+		uint64_t player_id = p_comps.at(0);
+
 		auto p_comp = ecs->getComponent<Component::Position>(player_id, Component::Type::POSITION);
 
 		// if no position is available we can do nothing

@@ -61,7 +61,7 @@ void ECS::destroyEntity(uint64_t id)
 
 	for(auto comp : components)
 	{
-		removeComponent(id, comp.first);
+		if(comp.second) removeComponent(id, comp.first);
 	}
 	
 	auto pr = std::equal_range(std::begin(entities), std::end(entities), id);
@@ -134,9 +134,7 @@ void ECS::registerComponent(uint64_t entity, Component::TComponentPtr component)
     sstream << "adding componenttype " << static_cast<uint64_t>(component->type) << " for entity " << entity << "...";
     Logger::Instance()->logLine(Logger::Level::LDEBUG, sstream.str());
 
-    uint64_t key = entity_key_map[entity];
-
-    if(Component::hasComponent(key, component->type))
+    if(hasComponent(entity, component->type))
     {
         Logger::Instance()->logLine(Logger::Level::LDEBUG, "already registered!"); 
         return;
@@ -157,9 +155,7 @@ void ECS::removeComponent(uint64_t entity, Component::Type componentType)
     sstream << "removing componenttype " << static_cast<uint64_t>(componentType) << " for entity " << entity << "...";
     Logger::Instance()->logLine(Logger::Level::LDEBUG, sstream.str());
 
-    uint64_t key = entity_key_map[entity];
-
-    if(!Component::hasComponent(key, componentType)) 
+    if(!hasComponent(entity, componentType))
     {
         Logger::Instance()->logLine(Logger::Level::LDEBUG, "not registered!"); 
         return;

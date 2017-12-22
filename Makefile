@@ -10,7 +10,7 @@ LDIRS 	 := -L$(PROJDIR)lib/Windows64 -L$(PROJDIR)/lib/Linux64
 CC=g++
 
 #set flags
-CFLAGS=$(IDIRS) -std=c++11 -Wall -Werror
+CFLAGS= $(IDIRS) -std=c++11 -Wall -Werror
 OSFLAGS=
 
 #set libs

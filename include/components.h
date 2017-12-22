@@ -14,6 +14,8 @@
 #include <exception>
 #include "console/iconsole.h"
 
+#include "deprecated.h"
+
 namespace Component
 {
 	enum Type
@@ -28,7 +30,8 @@ namespace Component
 		TARGET	 	 = (1 << 6),
 		CAMERA   	 = (1 << 7),
 		DESTRUCTIBLE = (1 << 8),
-		ATTACK       = (1 << 9)
+		ATTACK       = (1 << 9),
+		PLAYER		 = (1 << 10)
 	};
 
 	struct Component {
@@ -183,10 +186,18 @@ namespace Component
 		{}
 	};
 
-	typedef std::shared_ptr<Component> TComponentPtr;
+	//! Component used to keep track of the player
+	struct Player : public Component
+	{
+		Player() :
+			Component(Type::PLAYER)
+		{}
+	};
+
+	typedef std::shared_ptr<Component> TComponentPtr; /*! Shared_ptr to Component type declaration */
 	
-	extern bool hasComponent(uint16_t cbits, Type t);
-	extern TComponentPtr createNew(Type componentType);
+	DEPRECATED extern bool hasComponent(uint16_t cbits, Type t);
+	DEPRECATED extern TComponentPtr createNew(Type componentType);
 }
 
 #endif /* INCLUDE_COMPONENTS_H_ */

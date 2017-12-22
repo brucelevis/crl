@@ -10,6 +10,8 @@
 #include "components.h"
 #include "ecs.h"
 
+#include "logger.h"
+
 AttackSystem::AttackSystem() :
     ISystem(Component::Type::ATTACK
     		, ISystem::Type::ATTACK)
@@ -33,6 +35,8 @@ void AttackSystem::handleMessage(SystemMessage::TMessagePtr message, ECS* ecs)
 
 	//Todo: More complex attack shizzle
 	int16_t damage = a_a_comp->damage;
+
+	if(ecs->hasComponent(mmessage->target, Component::PLAYER)) Logger::Instance()->logLine("Thou arth attacked");
 
 	ecs->sendSystemMessage(ISystem::Type::DESTRUCTIBLE,
 						SystemMessage::TMessagePtr(new SystemMessage::DamageMessage(mmessage->target, damage)));

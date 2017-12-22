@@ -21,17 +21,34 @@ namespace Component
 	enum Type
 	{
 		NONE	 	 = 0,
-		POSITION 	 = (1 << 0),
-		MOVEMENT 	 = (1 << 1),
-		RENDER	 	 = (1 << 2),
-		INPUT	 	 = (1 << 3),
-		AI		 	 = (1 << 4),
-		SKILL	 	 = (1 << 5),
-		TARGET	 	 = (1 << 6),
-		CAMERA   	 = (1 << 7),
-		DESTRUCTIBLE = (1 << 8),
-		ATTACK       = (1 << 9),
-		PLAYER		 = (1 << 10)
+		POSITION 	 = (1 << 0),  /*!< Contains location */
+		MOVEMENT 	 = (1 << 1),  /*!< Can move and has delta's */
+		RENDER	 	 = (1 << 2),  /*!< Contains render information */
+		INPUT	 	 = (1 << 3),  /*!< Gathers and reacts to input */
+		AI		 	 = (1 << 4),  /*!< Has an AI */
+		SKILL	 	 = (1 << 5),  /*!< Has skill modifiers */
+		TARGET	 	 = (1 << 6),  /*!< Targets something */
+		CAMERA   	 = (1 << 7),  /*!< Has a viewport definition */
+		DESTRUCTIBLE = (1 << 8),  /*!< Can be destroyed */
+		ATTACK       = (1 << 9),  /*!< Can attack */
+		PLAYER		 = (1 << 10), /*!< Is a player */
+		PICKABLE     = (1 << 11), /*!< Can be picked up */
+		THROW        = (1 << 12), /*!< Can be thrown */
+		EQUIP        = (1 << 13), /*!< Is equipable */
+		CONTAINER    = (1 << 14), /*!< Contains other entities */
+		CONSUME      = (1 << 15), /*!< Can be consumed */
+		EFFECT       = (1 << 16), /*!< Has an effect */
+		DOOR         = (1 << 17), /*!< Opens and closes */
+		NOTUSED      = (1 << 18), /*!< NOT USED */
+		STAIR        = (1 << 19), /*!< Is a staircase */
+		READ         = (1 << 20), /*!< Can be read */
+		FLY          = (1 << 21), /*!< Entity flies */
+		SOLID        = (1 << 22), /*!< Cannot be walked through */
+		PATH         = (1 << 23), /*!< Contains waypoints for movement */
+		TALK         = (1 << 24), /*!< Can be talked to or talks */
+		NAME         = (1 << 25), /*!< Name of the entity */
+		DESCRIPTION  = (1 << 26), /*!< Description of the entity */
+		RARITY       = (1 << 27)  /*!< Determines how rare an entity is */
 	};
 
 	struct Component {
@@ -191,6 +208,126 @@ namespace Component
 	{
 		Player() :
 			Component(Type::PLAYER)
+		{}
+	};
+
+	//! Can be picked up
+	struct Pickable : Component
+	{
+		Pickable() :
+			Component(Type::PICKABLE)
+		{}
+	};
+
+	//! Can be thrown
+	struct Throw : Component
+	{
+		Throw() :
+			Component(Type::THROW)
+		{}
+	};
+
+	//! Can be equipped
+	struct Equip : Component
+	{
+		Equip() :
+			Component(Type::EQUIP)
+		{}
+	};
+
+	//! Can contain other entities
+	struct Container : Component
+	{
+		Container() :
+			Component(Type::CONTAINER)
+		{}
+	};
+
+	//! Can be consumed
+	struct Consume : Component
+	{
+		Consume() :
+			Component(Type::CONSUME)
+		{}
+	};
+
+	//! Applies an effect
+	struct Effect : Component
+	{
+		Effect() :
+			Component(Type::EFFECT)
+		{}
+	};
+
+	//! Door
+	struct Door : Component
+	{
+		Door() :
+			Component(Type::DOOR)
+		{}
+	};
+
+	//! Stairs
+	struct Stair : Component
+	{
+		Stair() :
+			Component(Type::STAIR)
+		{}
+	};
+
+	//! Can be read
+	struct Read : Component
+	{
+		Read() :
+			Component(Type::READ)
+		{}
+	};
+
+	//! Can fly
+	struct Fly : Component
+	{
+		Fly() :
+			Component(Type::FLY)
+		{}
+	};
+
+	//! Contains pathing information
+	struct Path : Component
+	{
+		Path() :
+			Component(Type::PATH)
+		{}
+	};
+
+	//! Can talk or be talked to
+	struct Talk : Component
+	{
+		Talk() :
+			Component(Type::TALK)
+		{}
+	};
+
+	//! Name
+	struct Name : Component
+	{
+		Name() :
+			Component(Type::NAME)
+		{}
+	};
+
+	//! Description
+	struct Description : Component
+	{
+		Description() :
+			Component(Type::DESCRIPTION)
+		{}
+	};
+
+	//! Determines rarity of an entity
+	struct Rarity : Component
+	{
+		Rarity() :
+			Component(Type::RARITY)
 		{}
 	};
 

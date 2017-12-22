@@ -2,7 +2,7 @@
  * attacksystem.h
  *
  *  Created on: Dec 22, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #ifndef INCLUDE_SYSTEMS_ATTACKSYSTEM_H_

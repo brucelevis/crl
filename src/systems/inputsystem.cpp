@@ -72,9 +72,39 @@ void InputSystem::handleMessage(SystemMessage::TMessagePtr message, uint64_t ent
 
 		if(dx != 0 || dy != 0)
 		{
-			// send the "I like to move it, move it" message
-			ecs->sendSystemMessage(ISystem::Type::MOVEMENT,
-					SystemMessage::TMessagePtr(new SystemMessage::MovementMessage(entity, dx, dy)));
+			bool attacked = false;
+			auto p_comp = ecs->getComponent<Component::Position>(entity, Component::POSITION);
+
+			if(p_comp && ecs->hasComponent(entity, Component::ATTACK))
+			{
+				auto c_ents = ecs->getEntitiesWithComponent(Component::POSITION);
+
+				for(uint64_t possible_target : c_ents)
+				{
+					auto p_p_comp = ecs->getComponent<Component::Position>(possible_target, Component::POSITION);
+
+					if(p_p_comp && p_p_comp->x == p_comp->x + dx &&
+						           p_p_comp->y == p_comp->y + dy)
+					{
+						if(ecs->hasComponent(possible_target, Component::DESTRUCTIBLE))
+						{
+							// send the "I'd like to obliberate that thing" message
+							ecs->sendSystemMessage(ISystem::Type::ATTACK,
+									SystemMessage::TMessagePtr(new SystemMessage::AttackMessage(entity, possible_target)));
+
+							attacked = true;
+							break;
+						}
+					}
+				}
+			}
+
+			if(!attacked)
+			{
+				// send the "I like to move it, move it" message
+				ecs->sendSystemMessage(ISystem::Type::MOVEMENT,
+						SystemMessage::TMessagePtr(new SystemMessage::MovementMessage(entity, dx, dy)));
+			}
 		}
 	}
 }

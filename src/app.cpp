@@ -87,6 +87,7 @@ void Application::mainloop()
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Input()));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Movement(100)));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::AIComponent(Component::AIComponent::PLAYER)));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Attack(10)));
 
 	std::map<Component::Skill::SkillType, int16_t> skills;
 	skills[Component::Skill::SkillType::ATK] = 10;
@@ -102,6 +103,8 @@ void Application::mainloop()
 	ecs.addSystem<MovementSystem>();
 	ecs.addSystem<MapSystem>();
 	ecs.addSystem<CameraSystem>();
+	ecs.addSystem<AttackSystem>();
+	ecs.addSystem<DestructibleSystem>();
 	
 	ecs.setPlayerId(entity);
 
@@ -120,6 +123,7 @@ void Application::mainloop()
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(9, 9)));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( IConsole::Color::BLUE, '1')));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::AIComponent(Component::AIComponent::DUMB)));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Destructible(30)));
 
 	Tiles::createDefinition(1, Tiles::Flags::BLOCKING,    IConsole::Color::WHITE, '#');
 	Tiles::createDefinition(2, 0, IConsole::Color::WHITE, 0);

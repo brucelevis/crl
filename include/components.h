@@ -175,9 +175,9 @@ namespace Component
 	//! Attack component, used to attack stuff
 	struct Attack : public Component
 	{
-		uint16_t damage;
+		int16_t damage;
 
-		Attack(uint16_t damage) :
+		Attack(int16_t damage) :
 			Component(Type::ATTACK)
 		  , damage(damage)
 		{}

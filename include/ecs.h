@@ -157,6 +157,21 @@ public:
 	 */
 	std::shared_ptr<Map> getMap() const;
 
+	//! Gets all entities with a specific component
+	/*!
+	 * \param componentType the type of component to get all entities for
+	 * \return a list of entities with the specified component type available
+	 */
+	const std::vector<uint64_t>& getEntitiesWithComponent(Component::Type componentType);
+
+	//! Check if an entity has a specific component
+	/*!
+	 * \param entity The entity to check
+	 * \param type The component to check for
+	 * \return True if the entity has the component, otherwise false
+	 */
+	bool hasComponent(uint64_t entity, Component::Type type);
+
 	//! Determine if an entity exists
 	/*!
 	 * \return True if the entity exists, otherwise false
@@ -165,10 +180,13 @@ public:
 private:
 	static uint64_t current_max_id; /*! Current max id used */
 
+	// Lot's of different ways of tracking
+	// The reason for having so much is O(1) acess over RAM usage
 	std::vector<uint64_t> entities; /*! List of entities */
 	std::vector<uint64_t> reusable_ids; /*! List of id's that can be reused when creating a new entity */
 	std::map<uint64_t, uint64_t> entity_key_map; /*! Entity -> Key mapping */
 	std::map<uint64_t, std::map<Component::Type, Component::TComponentPtr> > entity_component_map; /*! Maps entities to components */
+	std::map<Component::Type, std::vector<uint64_t>> component_entity_map; /*! Used to map component types to entities */
 
 	std::map<ISystem::Type, std::vector<SystemMessage::TMessagePtr>> system_messages; /*! Messages sent between systems */
 	std::vector<std::shared_ptr<ISystem>> systems; /*! List of systems */

@@ -54,6 +54,15 @@ void ECS::destroyEntity(uint64_t id)
 	std::stringstream sstream;
     sstream << "destroying entity " << id;
     Logger::Instance()->logLine(Logger::Level::LDEBUG, sstream.str());
+
+    if(!entityExists(id)) return;
+
+	auto components = getComponents(id);
+
+	for(auto comp : components)
+	{
+		removeComponent(id, comp.first);
+	}
 	
 	auto pr = std::equal_range(std::begin(entities), std::end(entities), id);
     entities.erase(pr.first, pr.second);
@@ -119,11 +128,8 @@ uint64_t ECS::getId()
 
 void ECS::registerComponent(uint64_t entity, Component::TComponentPtr component)
 {
-	if(!component)
-	{
-		return;
-	}
-	
+	if(!component || !entityExists(entity)) return;
+
     std::stringstream sstream;
     sstream << "adding componenttype " << static_cast<uint64_t>(component->type) << " for entity " << entity << "...";
     Logger::Instance()->logLine(Logger::Level::LDEBUG, sstream.str());
@@ -138,12 +144,15 @@ void ECS::registerComponent(uint64_t entity, Component::TComponentPtr component)
 
     entity_key_map[entity] |= static_cast<uint64_t>(component->type);
     entity_component_map[entity][component->type] = component;
+    component_entity_map[component->type].push_back(entity);
 	
 	checkSystemInterests(entity);
 }
 
 void ECS::removeComponent(uint64_t entity, Component::Type componentType)
 {
+	if(!entityExists(entity)) return;
+
     std::stringstream sstream;
     sstream << "removing componenttype " << static_cast<uint64_t>(componentType) << " for entity " << entity << "...";
     Logger::Instance()->logLine(Logger::Level::LDEBUG, sstream.str());
@@ -158,6 +167,16 @@ void ECS::removeComponent(uint64_t entity, Component::Type componentType)
 
     entity_key_map[entity] &= ~(static_cast<uint64_t>(componentType));
     entity_component_map[entity][componentType].reset();
+
+    //TODO: can this be O(1)?
+    auto entity_index =
+    		std::find(component_entity_map[componentType].begin(),
+    				  component_entity_map[componentType].end(), entity);
+
+    if(entity_index != component_entity_map[componentType].end())
+    {
+    	component_entity_map[componentType].erase(entity_index);
+    }
 	
 	checkSystemInterests(entity);
 }
@@ -254,4 +273,13 @@ void ECS::checkSystemInterests(uint64_t entity)
 	}
 }
 
+const std::vector<uint64_t>& ECS::getEntitiesWithComponent(Component::Type componentType)
+{
+	return component_entity_map[componentType];
+}
+
+bool ECS::hasComponent(uint64_t entity, Component::Type type)
+{
+	return (entity_key_map[entity] & static_cast<uint64_t>(type)) > 0;
+}
 

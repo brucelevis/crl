@@ -2,7 +2,7 @@
  * attacksystem.cpp
  *
  *  Created on: Dec 22, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #include "systems/attacksystem.h"
@@ -24,25 +24,19 @@ AttackSystem::~AttackSystem()
 
 void AttackSystem::handleMessage(SystemMessage::TMessagePtr message, ECS* ecs)
 {
-	auto mmessage = std::static_pointer_cast<SystemMessage::MovementMessage>(message);
+	auto mmessage = std::static_pointer_cast<SystemMessage::AttackMessage>(message);
 	if(!mmessage) return;
 
-	auto p_comp = ecs->getComponent<Component::Position>(mmessage->entity, Component::Type::POSITION);
-	if(!p_comp) return;
+	auto a_a_comp = ecs->getComponent<Component::Attack>      (mmessage->attacker, Component::Type::ATTACK);
+	auto t_d_comp = ecs->getComponent<Component::Destructible>(mmessage->target,   Component::Type::DESTRUCTIBLE);
+	if(!a_a_comp || ! t_d_comp) return;
+
+	//Todo: More complex attack shizzle
+	int16_t damage = a_a_comp->damage;
+
+	ecs->sendSystemMessage(ISystem::Type::DESTRUCTIBLE,
+						SystemMessage::TMessagePtr(new SystemMessage::DamageMessage(mmessage->target, damage)));
 }
-
-/*
- * 	auto map = ecs->getMap();
-	if(!map) return;
-
-
-	for(uint64_t entity : interested_entities)
-	{
-		auto a_comp = ecs->getComponent<Component::Attack>(entity, Component::Type::ATTACK);
-
-		if(!a_comp) continue;
-	}
- */
 
 /* virtual */ void AttackSystem::update(ECS* ecs, float delta) /* = 0 */
 {

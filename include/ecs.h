@@ -26,6 +26,9 @@ public:
 	ECS();
 	~ECS();
 	
+	//! Initializes the ECS
+	void init();
+
 	//! Cleanup method
 	void cleanUp();
 

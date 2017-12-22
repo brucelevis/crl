@@ -22,6 +22,7 @@ void MapGenerator::split_bsp(std::vector<BSPNode*>& leafs, BSPNode* node, uint8_
 	if(node == nullptr) return;
 	if(level >= config.max_bsp_recursion)
 	{
+		node->is_leaf = true;
 		leafs.push_back(node);
 		return;
 	}
@@ -36,6 +37,7 @@ void MapGenerator::split_bsp(std::vector<BSPNode*>& leafs, BSPNode* node, uint8_
 	// we really cannot split in any way
 	if(min_horizontal_reached && min_vertical_reached)
 	{
+		node->is_leaf = true;
 		leafs.push_back(node);
 		return;
 	}
@@ -49,6 +51,13 @@ void MapGenerator::split_bsp(std::vector<BSPNode*>& leafs, BSPNode* node, uint8_
 		// split bounds (if we go higher or lower a new room is too small)
 		uint16_t min_y  = node->y0 + config.min_room_height;
 		uint16_t max_y  = node->y1 - config.min_room_height;
+
+		if(min_y > max_y)
+		{
+			node->is_leaf = true;
+			leafs.push_back(node);
+			return;
+		}
 
 		uint16_t diff   = max_y - min_y;
 		uint16_t rand_y = 0;
@@ -67,15 +76,24 @@ void MapGenerator::split_bsp(std::vector<BSPNode*>& leafs, BSPNode* node, uint8_
 				  , (uint16_t)(diff * (1.0f - split_range)));
 		}
 
-		node->left  = new BSPNode(node->x0, node->y0, node->x1, rand_y,        node);
-		node->right = new BSPNode(node->x0, rand_y,        node->x1, node->y1, node);
+		node->left  = new BSPNode(node->x0, node->y0, node->x1, rand_y,   node);
+		node->right = new BSPNode(node->x0, rand_y,   node->x1, node->y1, node);
 
+		node->left->sister  = node->right;
+		node->right->sister = node->left;
 	}
 	else
 	{
 		// split bounds (if we go higher or lower a new room is too small)
 		uint16_t min_x  = node->x0 + config.min_room_width;
 		uint16_t max_x  = node->x1 - config.min_room_width;
+
+		if(min_x > max_x)
+		{
+			node->is_leaf = true;
+			leafs.push_back(node);
+			return;
+		}
 
 		uint16_t diff   = max_x - min_x;
 		uint16_t rand_x = 0;
@@ -94,8 +112,11 @@ void MapGenerator::split_bsp(std::vector<BSPNode*>& leafs, BSPNode* node, uint8_
 				  , (uint16_t)(diff * (1.0f - split_range)));
 		}
 
-		node->left  = new BSPNode(node->x0, node->y0, rand_x,        node->y1, node);
-		node->right = new BSPNode(rand_x,        node->y0, node->x1, node->y1, node);
+		node->left  = new BSPNode(node->x0, node->y0, rand_x,   node->y1, node);
+		node->right = new BSPNode(rand_x,   node->y0, node->x1, node->y1, node);
+
+		node->left->sister  = node->right;
+		node->right->sister = node->left;
 	}
 
 	if(node->left)  split_bsp(leafs, node->left,  level + 1);
@@ -107,7 +128,7 @@ std::shared_ptr<Map> MapGenerator::generate() const
 	auto rng = RandomGenerator::Instance();
 
 	uint16_t width  = rng->randBetween(config.min_width,  config.max_width,  true);
-	uint16_t height = rng->randBetween(config.min_height, config.max_height, true);;
+	uint16_t height = rng->randBetween(config.min_height, config.max_height, true);
 
 	std::shared_ptr<Map> new_map = std::make_shared<Map>(width, height);
 
@@ -132,6 +153,31 @@ std::shared_ptr<Map> MapGenerator::generate() const
 					new_map->tiles[x][y] = 2;
 				}
 			}
+		}
+
+		// Continue going up
+		while(node && node->sister)
+		{
+			uint16_t node_center_x   = node->x0 + (node->x1 - node->x0) / 2;
+			uint16_t node_center_y   = node->y0 + (node->y1 - node->y0) / 2;
+
+			uint16_t sister_center_x = node->sister->x0 + (node->sister->x1 - node->sister->x0) / 2;
+			uint16_t sister_center_y = node->sister->y0 + (node->sister->y1 - node->sister->y0) / 2;
+
+			uint16_t start_x = node_center_x <= sister_center_x ? node_center_x : sister_center_x;
+			uint16_t start_y = node_center_y <= sister_center_y ? node_center_y : sister_center_y;
+			uint16_t end_x   = node_center_x >= sister_center_x ? node_center_x : sister_center_x;
+			uint16_t end_y   = node_center_y >= sister_center_y ? node_center_y : sister_center_y;
+
+			for(uint16_t x = start_x; x <= end_x; ++x)
+			{
+				for(uint16_t y = start_y; y <= end_y; ++y)
+				{
+					new_map->tiles[x][y] = 2;
+				}
+			}
+
+			node = node->parent;
 		}
 	}
 

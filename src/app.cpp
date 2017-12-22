@@ -74,6 +74,13 @@ void Application::renderFrame()
 
 void Application::mainloop()
 {
+	#ifndef NDEBUG
+		RandomGenerator::create(0xFF11FF22AA33AA44);
+		auto rng = RandomGenerator::Instance();
+	#endif
+
+	ecs.init();
+
 	uint64_t entity = ecs.createEntity();
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(2, 2)));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( IConsole::Color::WHITE, '@')));
@@ -109,11 +116,6 @@ void Application::mainloop()
 	Tiles::createDefinition(1, Tiles::Flags::BLOCKING,    IConsole::Color::WHITE, '#');
 	Tiles::createDefinition(2, 0, IConsole::Color::WHITE, 0);
 	Tiles::createDefinition(2, Tiles::Flags::TRANSPARENT, IConsole::Color::GREY, '.');
-
-	#ifndef NDEBUG
-		RandomGenerator::create(0xFF11FF22AA33AA44);
-		auto rng = RandomGenerator::Instance();
-	#endif
 
     while (!IConsole::Instance()->shouldClose())
 	{

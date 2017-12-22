@@ -13,22 +13,27 @@
 ECS::ECS() :
 	player_id(0)
 {
+
+}
+
+ECS::~ECS()
+{
+}
+
+void ECS::init()
+{
 	MapGeneratorConfig config;
 
 	config.min_width  = 35;
 	config.max_width  = 40;
-	config.min_height = 16;
-	config.max_height = 20;
+	config.min_height = 20;
+	config.max_height = 30;
 	config.max_bsp_recursion = 4;
 	config.type       = MapGeneratorConfig::DUNGEON;
 
 	MapGenerator mgen(config);
 
 	map_ptr = mgen.generate();
-}
-
-ECS::~ECS()
-{
 }
 
 void ECS::cleanUp()

@@ -70,12 +70,16 @@ struct BSPNode {
 	uint16_t y1;
 
 	BSPNode* parent;
+	BSPNode* sister;
 	BSPNode* left;
 	BSPNode* right;
 
+	bool is_leaf;
+
 	BSPNode(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1, BSPNode* parent) :
 		x0(x0), y0(y0), x1(x1), y1(y1)
-	  , parent(parent), left(nullptr), right(nullptr)
+	  , parent(parent), sister(nullptr), left(nullptr), right(nullptr)
+	  , is_leaf(false)
 	{}
 
 	~BSPNode()

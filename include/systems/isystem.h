@@ -26,13 +26,15 @@ public:
 	 */
 	enum Type
 	{
-		NONE = 0, /*!< None */
-		INPUT,    /*!< Input system */
-		AI,       /*!< AI handling system */
-		MOVEMENT, /*!< Movement system */
-		CAMERA,   /*!< Camera/viewport system */
-		MAP,      /*!< Map system */
-		RENDER    /*!< Rendering system */
+		NONE = 0, 		/*!< None */
+		INPUT,    		/*!< Input system */
+		AI,       		/*!< AI handling system */
+		ATTACK,			/*!< Attack system */
+		DESTRUCTIBLE,	/*!< Destructible system */
+		MOVEMENT, 		/*!< Movement system */
+		CAMERA,   		/*!< Camera/viewport system */
+		MAP,      		/*!< Map system */
+		RENDER    		/*!< Rendering system */
 	};
 
 	//! Constructor

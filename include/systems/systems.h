@@ -14,5 +14,7 @@
 #include "systems/mapsystem.h"
 #include "systems/aisystem.h"
 #include "systems/camerasystem.h"
+#include "systems/attacksystem.h"
+#include "systems/destructiblesystem.h"
 
 #endif /* INCLUDE_SYSTEMS_H_ */

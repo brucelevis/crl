@@ -16,7 +16,9 @@ namespace SystemMessage
 	{
 		NONE  = 0,
 		INPUT,
-		MOVEMENT
+		MOVEMENT,
+		ATTACK,
+		DAMAGE
 	};
 
 	struct Message
@@ -56,6 +58,30 @@ namespace SystemMessage
 		  ,	entity(entity)
 		  , delta_x(delta_x)
 		  , delta_y(delta_y)
+		{}
+	};
+
+	struct AttackMessage : public Message
+	{
+		uint64_t attacker;
+		uint64_t target;
+
+		AttackMessage(uint64_t attacker, uint64_t target) :
+			Message(MessageType::ATTACK)
+		  ,	attacker(attacker)
+		  , target(target)
+		{}
+	};
+
+	struct DamageMessage : public Message
+	{
+		uint64_t target;
+		int16_t damage;
+
+		DamageMessage(uint64_t target, int16_t damage) :
+			Message(MessageType::DAMAGE)
+		  ,	target(target)
+		  , damage(damage)
 		{}
 	};
 

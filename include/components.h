@@ -18,15 +18,17 @@ namespace Component
 {
 	enum Type
 	{
-		NONE	 = 0,
-		POSITION = (1 << 0),
-		MOVEMENT = (1 << 1),
-		RENDER	 = (1 << 2),
-		INPUT	 = (1 << 3),
-		AI		 = (1 << 4),
-		SKILL	 = (1 << 5),
-		TARGET	 = (1 << 6),
-		CAMERA   = (1 << 7)
+		NONE	 	 = 0,
+		POSITION 	 = (1 << 0),
+		MOVEMENT 	 = (1 << 1),
+		RENDER	 	 = (1 << 2),
+		INPUT	 	 = (1 << 3),
+		AI		 	 = (1 << 4),
+		SKILL	 	 = (1 << 5),
+		TARGET	 	 = (1 << 6),
+		CAMERA   	 = (1 << 7),
+		DESTRUCTIBLE = (1 << 8),
+		ATTACK       = (1 << 9)
 	};
 
 	struct Component {
@@ -155,6 +157,30 @@ namespace Component
 				throw std::runtime_error("Camera component viewport should be a power of two!");
 
 		}
+	};
+
+	//! Destructible component, used to assign health to something
+	struct Destructible : public Component
+	{
+		uint16_t max_hp; /*! Maximum hp */
+		uint16_t cur_hp; /*! Current hp */
+
+		Destructible(uint16_t max_hp) :
+			Component(Type::DESTRUCTIBLE)
+		  , max_hp(max_hp)
+		  , cur_hp(max_hp)
+		{}
+	};
+
+	//! Attack component, used to attack stuff
+	struct Attack : public Component
+	{
+		uint16_t damage;
+
+		Attack(uint16_t damage) :
+			Component(Type::ATTACK)
+		  , damage(damage)
+		{}
 	};
 
 	typedef std::shared_ptr<Component> TComponentPtr;

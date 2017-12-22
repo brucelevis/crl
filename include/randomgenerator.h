@@ -2,7 +2,7 @@
  * randomgenerator.h
  *
  *  Created on: Dec 21, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #ifndef INCLUDE_RANDOMGENERATOR_H_

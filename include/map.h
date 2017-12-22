@@ -25,6 +25,9 @@ public:
 	Map(uint16_t width, uint16_t height);
 	~Map();
 
+	uint16_t getWidth() const;
+	uint16_t getHeight() const;
+
 	void init();
 	void cleanUp();
 	void calculateFOV(uint16_t x, uint16_t y);
@@ -35,6 +38,9 @@ public:
 	bool isSolid(uint16_t x, uint16_t y) const;
 	bool isOpaque(uint16_t x, uint16_t y) const;
 	bool isVisible(uint16_t x, uint16_t y) const;
+
+	uint16_t** getTiles() const;
+	Visibility** getVisibilityMap() const;
 private:
 	uint16_t width;
 	uint16_t height;

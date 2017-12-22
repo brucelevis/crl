@@ -2,7 +2,7 @@
  * randomgenerator.cpp
  *
  *  Created on: Dec 21, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #include <cfloat>

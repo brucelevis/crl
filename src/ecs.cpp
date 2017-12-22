@@ -12,6 +12,7 @@
 
 ECS::ECS() :
 	player_id(0)
+  , active_camera(0)
 {
 
 }
@@ -27,8 +28,8 @@ void ECS::init()
 	config.min_width  = 35;
 	config.max_width  = 40;
 	config.min_height = 20;
-	config.max_height = 30;
-	config.max_bsp_recursion = 4;
+	config.max_height = 24;
+	config.max_bsp_recursion = 16;
 	config.type       = MapGeneratorConfig::DUNGEON;
 
 	MapGenerator mgen(config);
@@ -182,6 +183,20 @@ void ECS::setPlayerId(uint64_t id)
 const uint64_t ECS::getPlayerId() const
 {
 	return player_id;
+}
+
+void ECS::setActiveCamera(uint64_t id)
+{
+	if(std::find(entities.begin(), entities.end(), id) != entities.end())
+	{
+		active_camera = id;
+	}
+}
+
+
+const uint64_t ECS::getActiveCamera() const
+{
+	return active_camera;
 }
 
 std::shared_ptr<Map> ECS::getMap() const

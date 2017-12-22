@@ -139,6 +139,18 @@ public:
 	 */
 	const uint64_t getPlayerId() const;
 
+	//! Sets the active camera
+	/*!
+	 * \param id The ID of the active camera
+	 */
+	void setActiveCamera(uint64_t id);
+
+	//! Gets the active camera
+	/*!
+	 * \return The entity ID of the active camera
+	 */
+	const uint64_t getActiveCamera() const;
+
 	//! Returns an std::shared_ptr to the current map
 	/*!
 	 * \return An shared_ptr to the current map
@@ -164,7 +176,8 @@ private:
 	std::shared_ptr<Map> map_ptr; /*! shared_ptr to current map object used by game */
 
 
-	uint64_t player_id; /*! Player ID kept for easy access */
+	uint64_t player_id;     /*! Player ID kept for easy access */
+	uint64_t active_camera; /*! Active camera ID */
 
 	//! Creates a new ID
 	/*!

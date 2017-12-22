@@ -17,14 +17,22 @@ class ECS;
 class ISystem
 {
 public:
+
+	//! System types
+	/*!
+	 * The order of this enum determines the order the systems are called
+	 *
+	 * \sa ECS::addSystem
+	 */
 	enum Type
 	{
-		NONE = 0,
-		INPUT,
-		AI,
-		MOVEMENT,
-		MAP,
-		RENDER
+		NONE = 0, /*!< None */
+		INPUT,    /*!< Input system */
+		AI,       /*!< AI handling system */
+		MOVEMENT, /*!< Movement system */
+		CAMERA,   /*!< Camera/viewport system */
+		MAP,      /*!< Map system */
+		RENDER    /*!< Rendering system */
 	};
 
 	//! Constructor

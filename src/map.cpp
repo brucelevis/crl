@@ -31,6 +31,16 @@ Map::~Map()
 		cleanUp();
 }
 
+uint16_t Map::getWidth() const
+{
+	return width;
+}
+
+uint16_t Map::getHeight() const
+{
+	return height;
+}
+
 void Map::init()
 {
 	Logger::Instance()->logLine("initializing map");
@@ -107,6 +117,20 @@ void Map::render()
 
 		}
 	}
+}
+
+uint16_t** Map::getTiles() const
+{
+	if(!initialized) throw std::runtime_error("map not initialized!");
+
+	return tiles;
+}
+
+Map::Visibility** Map::getVisibilityMap() const
+{
+	if(!initialized) throw std::runtime_error("map not initialized!");
+
+	return visibility_map;
 }
 
 const int8_t multipliers[4][8] = {

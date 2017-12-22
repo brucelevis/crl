@@ -2,7 +2,7 @@
  * mapgenerator.cpp
  *
  *  Created on: Dec 21, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #include <vector>
@@ -155,7 +155,7 @@ std::shared_ptr<Map> MapGenerator::generate() const
 			}
 		}
 
-		// Continue going up
+		// Continue going up (TODO: Make more efficient)
 		while(node && node->sister)
 		{
 			uint16_t node_center_x   = node->x0 + (node->x1 - node->x0) / 2;

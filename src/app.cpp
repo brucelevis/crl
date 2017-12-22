@@ -101,8 +101,16 @@ void Application::mainloop()
 	ecs.addSystem<AISystem>();
 	ecs.addSystem<MovementSystem>();
 	ecs.addSystem<MapSystem>();
+	ecs.addSystem<CameraSystem>();
 	
 	ecs.setPlayerId(entity);
+
+	// create camera that follows the player
+	entity = ecs.createEntity();
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(0, 0)));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Camera( 80, 24 )));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Target( ecs.getPlayerId() )));
+	ecs.setActiveCamera(entity);
 
 	entity = ecs.createEntity();
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(11, 11)));

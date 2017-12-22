@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <memory>
 #include <map>
+#include <exception>
 #include "console/iconsole.h"
 
 namespace Component
@@ -24,7 +25,8 @@ namespace Component
 		INPUT	 = (1 << 3),
 		AI		 = (1 << 4),
 		SKILL	 = (1 << 5),
-		TARGET	 = (1 << 6)
+		TARGET	 = (1 << 6),
+		CAMERA   = (1 << 7)
 	};
 
 	struct Component {
@@ -132,6 +134,27 @@ namespace Component
 			Component(Type::TARGET)
 		  , target(target)
 		{}
+	};
+
+	//! Camera component, used for viewports
+	struct Camera : public Component
+	{
+		uint16_t view_width;  /*! Viewport width */
+		uint16_t view_height; /*! Viewport height */
+		uint16_t x_offset;    /*! X offset for rendering */
+		uint16_t y_offset;    /*! Y offset for rendering */
+
+		Camera(uint16_t view_width, uint16_t view_height) :
+			Component(Type::CAMERA)
+		  , view_width(view_width)
+		  , view_height(view_height)
+		  , x_offset(0)
+		  , y_offset(0)
+		{
+			if(view_width % 2 > 0 || view_height % 2 > 0)
+				throw std::runtime_error("Camera component viewport should be a power of two!");
+
+		}
 	};
 
 	typedef std::shared_ptr<Component> TComponentPtr;

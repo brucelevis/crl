@@ -2,7 +2,7 @@
  * mappgenerator.h
  *
  *  Created on: Dec 21, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #ifndef INCLUDE_GENERATORS_MAPGENERATOR_H_

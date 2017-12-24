@@ -20,41 +20,42 @@
 
 namespace Component
 {
-	enum Type
+	enum Type : uint64_t
 	{
 		NONE	 	 = 0,
-		POSITION 	 = (1 << 0),  /*!< Contains location */
-		MOVEMENT 	 = (1 << 1),  /*!< Can move and has delta's */
-		RENDER	 	 = (1 << 2),  /*!< Contains render information */
-		INPUT	 	 = (1 << 3),  /*!< Gathers and reacts to input */
-		AI		 	 = (1 << 4),  /*!< Has an AI */
-		SKILL	 	 = (1 << 5),  /*!< Has skill modifiers */
-		TARGET	 	 = (1 << 6),  /*!< Targets something */
-		CAMERA   	 = (1 << 7),  /*!< Has a viewport definition */
-		DESTRUCTIBLE = (1 << 8),  /*!< Can be destroyed */
-		ATTACK       = (1 << 9),  /*!< Can attack */
-		PLAYER		 = (1 << 10), /*!< Is a player */
-		PICKABLE     = (1 << 11), /*!< Can be picked up */
-		THROWABLE    = (1 << 12), /*!< Can be thrown */
-		EQUIPER      = (1 << 13), /*!< Can equip */
-		CONTAINER    = (1 << 14), /*!< Contains other entities */
-		CONSUMER     = (1 << 15), /*!< Can consume */
-		EFFECT       = (1 << 16), /*!< Has an effect that will be applied to something */
-		DOOR         = (1 << 17), /*!< Opens and closes */
-		WEAPON       = (1 << 18), /*!< Used to determine weapon type*/
-		STAIR        = (1 << 19), /*!< Is a staircase */
-		READ         = (1 << 20), /*!< Can be read */
-		FLY          = (1 << 21), /*!< Entity flies */
-		SOLID        = (1 << 22), /*!< Cannot be walked through */
-		PATH         = (1 << 23), /*!< Contains waypoints for movement */
-		TALK         = (1 << 24), /*!< Can be talked to or talks */
-		NAME         = (1 << 25), /*!< Name of the entity */
-		DESCRIPTION  = (1 << 26), /*!< Description of the entity */
-		RARITY       = (1 << 27), /*!< Determines how rare an entity is */
-		CONSUMABLE   = (1 << 28), /*! Determines if something can be consumed */
-		EQUIPABLE    = (1 << 29), /*! Determine if something can be equipped */
-		THROWER		 = (1 << 30), /*! Can throw stuff */
-		TIMER        = (1 << 31)  /*! Does a specified action each x turns, multiple can be specied */
+		POSITION 	 = ((uint64_t)1 << 0),  /*!< Contains location */
+		MOVEMENT 	 = ((uint64_t)1 << 1),  /*!< Can move and has delta's */
+		RENDER	 	 = ((uint64_t)1 << 2),  /*!< Contains render information */
+		INPUT	 	 = ((uint64_t)1 << 3),  /*!< Gathers and reacts to input */
+		AI		 	 = ((uint64_t)1 << 4),  /*!< Has an AI */
+		SKILL	 	 = ((uint64_t)1 << 5),  /*!< Has skill modifiers */
+		TARGET	 	 = ((uint64_t)1 << 6),  /*!< Targets something */
+		CAMERA   	 = ((uint64_t)1 << 7),  /*!< Has a viewport definition */
+		DESTRUCTIBLE = ((uint64_t)1 << 8),  /*!< Can be destroyed */
+		ATTACK       = ((uint64_t)1 << 9),  /*!< Can attack */
+		PLAYER		 = ((uint64_t)1 << 10), /*!< Is a player */
+		PICKABLE     = ((uint64_t)1 << 11), /*!< Can be picked up */
+		THROWABLE    = ((uint64_t)1 << 12), /*!< Can be thrown */
+		EQUIPER      = ((uint64_t)1 << 13), /*!< Can equip */
+		CONTAINER    = ((uint64_t)1 << 14), /*!< Contains other entities */
+		CONSUMER     = ((uint64_t)1 << 15), /*!< Can consume */
+		EFFECT       = ((uint64_t)1 << 16), /*!< Has an effect that will be applied to something */
+		DOOR         = ((uint64_t)1 << 17), /*!< Opens and closes */
+		WEAPON       = ((uint64_t)1 << 18), /*!< Used to determine weapon type*/
+		STAIR        = ((uint64_t)1 << 19), /*!< Is a staircase */
+		READ         = ((uint64_t)1 << 20), /*!< Can be read */
+		FLY          = ((uint64_t)1 << 21), /*!< Entity flies */
+		SOLID        = ((uint64_t)1 << 22), /*!< Cannot be walked through */
+		PATH         = ((uint64_t)1 << 23), /*!< Contains waypoints for movement */
+		TALK         = ((uint64_t)1 << 24), /*!< Can be talked to or talks */
+		NAME         = ((uint64_t)1 << 25), /*!< Name of the entity */
+		DESCRIPTION  = ((uint64_t)1 << 26), /*!< Description of the entity */
+		RARITY       = ((uint64_t)1 << 27), /*!< Determines how rare an entity is */
+		CONSUMABLE   = ((uint64_t)1 << 28), /*! Determines if something can be consumed */
+		EQUIPABLE    = ((uint64_t)1 << 29), /*! Determine if something can be equipped */
+		THROWER		 = ((uint64_t)1 << 30), /*! Can throw stuff */
+		TIMER        = ((uint64_t)1 << 31), /*! Does a specified action each x turns, multiple can be specied */
+		CLOUD        = ((uint64_t)1 << 32)  /*! Used if entity is not solid, but blocked by walls & doors */
 	};
 
 	struct Component {
@@ -94,11 +95,13 @@ namespace Component
 	{
 		IConsole::Color color;
 		uint16_t glyph;
+		uint16_t layer;
 		
-		Render(IConsole::Color color = IConsole::Color::WHITE, uint16_t glyph = '-') :
+		Render(IConsole::Color color = IConsole::Color::WHITE, uint16_t glyph = '-', uint16_t layer = 0) :
 			Component(Type::RENDER)
 		  , color (color)
 		  , glyph (glyph)
+		  , layer (layer)
 		{}
 	};
 
@@ -359,6 +362,20 @@ namespace Component
 
 		Rarity() :
 			Component(Type::RARITY)
+		{}
+	};
+
+	struct Solid : Component
+	{
+		Solid() :
+			Component(Type::SOLID)
+		{}
+	};
+
+	struct Cloud : Component
+	{
+		Cloud() :
+			Component(Type::CLOUD)
 		{}
 	};
 

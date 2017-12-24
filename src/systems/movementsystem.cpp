@@ -44,8 +44,11 @@ void MovementSystem::handleMessage(SystemMessage::TMessagePtr message, ECS* ecs)
 	// ...same for y
 	if(new_y > p_comp->y && mmessage->delta_y < 0) return;
 
-	// we cannot move into solid spaces
-	if(map->isSolid(new_x, new_y)) return;
+	// we cannot move into solid spaces if we are solid ourselves
+	if(map->isSolid(new_x, new_y) &&
+		(ecs->hasComponent(mmessage->entity, Component::SOLID) ||
+		 ecs->hasComponent(mmessage->entity, Component::CLOUD)))
+		return;
 
 	// we passed all checks so we can move!
 	p_comp->x = new_x;

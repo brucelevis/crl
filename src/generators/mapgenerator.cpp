@@ -187,7 +187,7 @@ std::shared_ptr<Map> MapGenerator::generate() const
 	{
 		for(uint16_t y = 0; y < height; ++y)
 		{
-			new_map->visibility_map[x][y] = Map::Visibility::VISIBLE;
+			new_map->visibility_map[x][y] = Map::Visibility::INVISIBLE;
 		}
 	}
 

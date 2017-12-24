@@ -30,6 +30,8 @@ RenderSystem::~RenderSystem()
 
 	if(!c_p_comp || !c_c_comp) return;
 
+	std::map<uint16_t, std::vector<uint64_t>> render_entities;
+
 	for(uint64_t entity : interested_entities)
 	{
 		auto p_comp = ecs->getComponent<Component::Position>(entity, Component::Type::POSITION);
@@ -48,12 +50,24 @@ RenderSystem::~RenderSystem()
 				continue;
 			}
 
+			render_entities[r_comp->layer].push_back(entity);
+		}
+
+	}
+
+	for(auto entities : render_entities)
+	{
+		for(auto r_entity : entities.second)
+		{
+			auto p_comp = ecs->getComponent<Component::Position>(r_entity, Component::Type::POSITION);
+			auto r_comp = ecs->getComponent<Component::Render>  (r_entity, Component::Type::RENDER);
+
+
 			IConsole::Instance()->set_color(r_comp->color);
 			IConsole::Instance()->set_char(
 					p_comp->x - c_c_comp->x_offset,
 					p_comp->y - c_c_comp->y_offset,
 					r_comp->glyph);
 		}
-
 	}
 }

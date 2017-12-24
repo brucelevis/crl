@@ -12,6 +12,8 @@
 #include <memory>
 #include <map>
 #include <exception>
+#include <string>
+
 #include "console/iconsole.h"
 
 #include "deprecated.h"
@@ -33,13 +35,13 @@ namespace Component
 		ATTACK       = (1 << 9),  /*!< Can attack */
 		PLAYER		 = (1 << 10), /*!< Is a player */
 		PICKABLE     = (1 << 11), /*!< Can be picked up */
-		THROW        = (1 << 12), /*!< Can be thrown */
-		EQUIP        = (1 << 13), /*!< Is equipable */
+		THROWABLE    = (1 << 12), /*!< Can be thrown */
+		EQUIPER      = (1 << 13), /*!< Can equip */
 		CONTAINER    = (1 << 14), /*!< Contains other entities */
-		CONSUME      = (1 << 15), /*!< Can be consumed */
-		EFFECT       = (1 << 16), /*!< Has an effect */
+		CONSUMER     = (1 << 15), /*!< Can consume */
+		EFFECT       = (1 << 16), /*!< Has an effect that will be applied to something */
 		DOOR         = (1 << 17), /*!< Opens and closes */
-		NOTUSED      = (1 << 18), /*!< NOT USED */
+		WEAPON       = (1 << 18), /*!< Used to determine weapon type*/
 		STAIR        = (1 << 19), /*!< Is a staircase */
 		READ         = (1 << 20), /*!< Can be read */
 		FLY          = (1 << 21), /*!< Entity flies */
@@ -48,7 +50,11 @@ namespace Component
 		TALK         = (1 << 24), /*!< Can be talked to or talks */
 		NAME         = (1 << 25), /*!< Name of the entity */
 		DESCRIPTION  = (1 << 26), /*!< Description of the entity */
-		RARITY       = (1 << 27)  /*!< Determines how rare an entity is */
+		RARITY       = (1 << 27), /*!< Determines how rare an entity is */
+		CONSUMABLE   = (1 << 28), /*! Determines if something can be consumed */
+		EQUIPABLE    = (1 << 29), /*! Determine if something can be equipped */
+		THROWER		 = (1 << 30), /*! Can throw stuff */
+		TIMER        = (1 << 31)  /*! Does a specified action each x turns, multiple can be specied */
 	};
 
 	struct Component {
@@ -220,18 +226,18 @@ namespace Component
 	};
 
 	//! Can be thrown
-	struct Throw : Component
+	struct Throwable : Component
 	{
-		Throw() :
-			Component(Type::THROW)
+		Throwable() :
+			Component(Type::THROWABLE)
 		{}
 	};
 
 	//! Can be equipped
-	struct Equip : Component
+	struct Equiper : Component
 	{
-		Equip() :
-			Component(Type::EQUIP)
+		Equiper() :
+			Component(Type::EQUIPER)
 		{}
 	};
 
@@ -244,10 +250,10 @@ namespace Component
 	};
 
 	//! Can be consumed
-	struct Consume : Component
+	struct Consumer : Component
 	{
-		Consume() :
-			Component(Type::CONSUME)
+		Consumer() :
+			Component(Type::CONSUMER)
 		{}
 	};
 
@@ -262,8 +268,19 @@ namespace Component
 	//! Door
 	struct Door : Component
 	{
-		Door() :
+		bool is_open;
+
+		Door(bool is_open) :
 			Component(Type::DOOR)
+		  , is_open(is_open)
+		{}
+	};
+
+	//! Determines weapon type
+	struct Weapon : Component
+	{
+		Weapon() :
+			Component(Type::WEAPON)
 		{}
 	};
 
@@ -310,22 +327,36 @@ namespace Component
 	//! Name
 	struct Name : Component
 	{
-		Name() :
+		std::string text;
+
+		Name(const std::string& text) :
 			Component(Type::NAME)
+		  , text(text)
 		{}
 	};
 
 	//! Description
 	struct Description : Component
 	{
-		Description() :
+		std::string text;
+
+		Description(const std::string& text) :
 			Component(Type::DESCRIPTION)
+		  , text(text)
 		{}
 	};
 
 	//! Determines rarity of an entity
 	struct Rarity : Component
 	{
+		//! Rarity levels enum
+		enum Level
+		{
+			COMMON = 0, /*!< Common entity */
+			RARE,       /*!< Unusual, rare entity */
+			LEGENDARY   /*!< One of a kind! */
+		};
+
 		Rarity() :
 			Component(Type::RARITY)
 		{}

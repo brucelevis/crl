@@ -16,5 +16,6 @@
 #include "systems/camerasystem.h"
 #include "systems/attacksystem.h"
 #include "systems/destructiblesystem.h"
+#include "systems/containersystem.h"
 
 #endif /* INCLUDE_SYSTEMS_H_ */

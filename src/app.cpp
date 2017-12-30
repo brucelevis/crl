@@ -109,6 +109,7 @@ void Application::mainloop()
 	ecs.addSystem<CameraSystem>();
 	ecs.addSystem<AttackSystem>();
 	ecs.addSystem<DestructibleSystem>();
+	ecs.addSystem<ContainerSystem>();
 	
 	//ecs.setPlayerId(entity);
 

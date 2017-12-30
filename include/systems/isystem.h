@@ -29,6 +29,7 @@ public:
 		NONE = 0, 		/*!< None */
 		INPUT,    		/*!< Input system */
 		AI,       		/*!< AI handling system */
+		CONTAINER,		/*!< Container handling system */
 		ATTACK,			/*!< Attack system */
 		DESTRUCTIBLE,	/*!< Destructible system */
 		MOVEMENT, 		/*!< Movement system */

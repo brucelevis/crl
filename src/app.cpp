@@ -1,6 +1,7 @@
 #include <exception>
 #include <iostream>
 #include <cstdint>
+#include <chrono>
 
 #include "ecs.h"
 #include "components.h"
@@ -116,31 +117,54 @@ void Application::mainloop()
 	// create camera that follows the player
 	entity = ecs.createEntity();
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(0, 0)));
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Camera( 80, 24 )));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Camera( 40, 20, 10, 4 )));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Target( player_entity )));
-	ecs.setActiveCamera(entity);
+	//ecs.setActiveCamera(entity);
 
 	entity = ecs.createEntity();
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(11, 11)));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( IConsole::Color::RED, '!')));
 	
+	for(int i = 0; i < 1; ++i)
+	{
+		entity = ecs.createEntity();
+		ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(3 + i, 3 + i)));
+		ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( IConsole::Color::BLUE, '1', 1)));
+		ecs.registerComponent(entity, Component::TComponentPtr(new Component::AIComponent(Component::AIComponent::DUMB)));
+		ecs.registerComponent(entity, Component::TComponentPtr(new Component::Destructible(30)));
+		ecs.registerComponent(entity, Component::TComponentPtr(new Component::Attack(10)));
+		ecs.registerComponent(entity, Component::TComponentPtr(new Component::Solid()));
+		//ecs.registerComponent(entity, Component::TComponentPtr(new Component::Target( player_entity )));
+	}
+
+	uint64_t ai_entity = entity;
 	entity = ecs.createEntity();
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(9, 9)));
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( IConsole::Color::BLUE, '1', 1)));
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::AIComponent(Component::AIComponent::DUMB)));
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Destructible(30)));
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Attack(10)));
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Solid()));
-	//ecs.registerComponent(entity, Component::TComponentPtr(new Component::Target( player_entity )));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(0, 0)));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Camera( 9, 9, 72, 0 )));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Target( ai_entity )));
 
 	Tiles::createDefinition(1, Tiles::Flags::BLOCKING,    IConsole::Color::WHITE, '#');
 	Tiles::createDefinition(2, 0, IConsole::Color::WHITE, 0);
 	Tiles::createDefinition(2, Tiles::Flags::TRANSPARENT, IConsole::Color::GREY, '.');
 
+	std::stringstream sstream;
+	sstream << "using high_resolution_clock "  << std::endl;
+	sstream << "period: " 	 	<< std::chrono::high_resolution_clock::period::num << std::endl;
+	sstream << "resolution: "	<< 1.0 / (double)std::chrono::high_resolution_clock::period::den << "s" << std::endl;
+	sstream << "steady: " 	 	<< std::boolalpha << std::chrono::high_resolution_clock::is_steady;
+	Logger::Instance()->logLine(sstream.str());
+
     while (!IConsole::Instance()->shouldClose())
 	{
+    	auto start = std::chrono::high_resolution_clock::now();
+
 		update();
 		renderFrame();
+
+		auto end = std::chrono::high_resolution_clock::now();
+		auto diff = end - start;
+
+		std::cout << std::chrono::duration <double, std::milli> (diff).count() << " ms" << std::endl;
 
 		last_key_pressed = IConsole::Instance()->getChar();
 	}

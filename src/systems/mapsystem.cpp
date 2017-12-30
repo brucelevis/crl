@@ -28,12 +28,21 @@ MapSystem::~MapSystem()
 	auto map_ptr = ecs->getMap();
 	if(!map_ptr) return;
 
-	uint64_t active_camera = ecs->getActiveCamera();
-	if(!ecs->entityExists(active_camera)) return;
+	auto cameras = ecs->getEntitiesWithComponent(Component::Type::CAMERA);
+
+	for(uint64_t camera : cameras)
+	{
+		renderView(camera, ecs, delta);
+	}
+}
+
+void MapSystem::renderView(uint64_t camera, ECS* ecs, float delta)
+{
+	auto map_ptr = ecs->getMap();
 
 	//get camera stuff
-	auto c_p_comp = ecs->getComponent<Component::Position>(active_camera, Component::Type::POSITION);
-	auto c_c_comp = ecs->getComponent<Component::Camera>  (active_camera, Component::Type::CAMERA);
+	auto c_p_comp = ecs->getComponent<Component::Position>(camera, Component::Type::POSITION);
+	auto c_c_comp = ecs->getComponent<Component::Camera>  (camera, Component::Type::CAMERA);
 
 	if(!c_p_comp || !c_c_comp) return;
 
@@ -54,12 +63,18 @@ MapSystem::~MapSystem()
 			if(visibility_map[x][y] == Map::Visibility::VISIBLE)
 			{
 				IConsole::Instance()->set_color(def.color);
-				IConsole::Instance()->set_char(x - c_c_comp->x_offset, y - c_c_comp->y_offset, def.glyph);
+				IConsole::Instance()->set_char(
+						x - c_c_comp->x_offset + c_c_comp->viewport_x_loc,
+						y - c_c_comp->y_offset + c_c_comp->viewport_y_loc,
+						def.glyph);
 			}
 			else if(visibility_map[x][y] == Map::Visibility::SEEN)
 			{
 				IConsole::Instance()->set_color(def.darker_color);
-				IConsole::Instance()->set_char(x - c_c_comp->x_offset, y - c_c_comp->y_offset, def.glyph);
+				IConsole::Instance()->set_char(
+						x - c_c_comp->x_offset + c_c_comp->viewport_x_loc,
+						y - c_c_comp->y_offset + c_c_comp->viewport_y_loc,
+						def.glyph);
 			}
 
 		}

@@ -18,6 +18,15 @@ public:
     ~MapSystem();
 
     virtual void update(ECS* ecs, float delta) /* = 0 */;
+
+private:
+    //! Renders the viewport for a camera
+    /*!
+     * \param camera The camera entity to render for
+     * \param ecs The ECS that is used
+     * \param delta Delta time
+     */
+    void renderView(uint64_t camera, ECS* ecs, float delta);
 };
 
 

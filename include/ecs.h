@@ -145,13 +145,13 @@ public:
 	/*!
 	 * \param id The ID of the active camera
 	 */
-	void setActiveCamera(uint64_t id);
+	DEPRECATED void setActiveCamera(uint64_t id);
 
 	//! Gets the active camera
 	/*!
 	 * \return The entity ID of the active camera
 	 */
-	const uint64_t getActiveCamera() const;
+	DEPRECATED const uint64_t getActiveCamera() const;
 
 	//! Returns an std::shared_ptr to the current map
 	/*!

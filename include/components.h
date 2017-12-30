@@ -170,20 +170,24 @@ namespace Component
 	//! Camera component, used for viewports
 	struct Camera : public Component
 	{
-		uint16_t view_width;  /*! Viewport width */
-		uint16_t view_height; /*! Viewport height */
-		uint16_t x_offset;    /*! X offset for rendering */
-		uint16_t y_offset;    /*! Y offset for rendering */
+		uint16_t view_width;  	/*! Viewport width */
+		uint16_t view_height; 	/*! Viewport height */
+		uint16_t x_offset;    	/*! X offset for rendering */
+		uint16_t y_offset;    	/*! Y offset for rendering */
+		uint16_t viewport_x_loc;/*! X location of viewport on screen */
+		uint16_t viewport_y_loc;/*! Y location of viewport on screen */
 
-		Camera(uint16_t view_width, uint16_t view_height) :
+		Camera(uint16_t view_width, uint16_t view_height, uint16_t viewport_x_loc, uint16_t viewport_y_loc) :
 			Component(Type::CAMERA)
 		  , view_width(view_width)
 		  , view_height(view_height)
 		  , x_offset(0)
 		  , y_offset(0)
+		  , viewport_x_loc(viewport_x_loc)
+		  , viewport_y_loc(viewport_y_loc)
 		{
-			if(view_width % 2 > 0 || view_height % 2 > 0)
-				throw std::runtime_error("Camera component viewport should be a power of two!");
+			//if(view_width % 2 > 0 || view_height % 2 > 0)
+			//	throw std::runtime_error("Camera component viewport should be a power of two!");
 
 		}
 	};

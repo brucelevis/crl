@@ -35,9 +35,10 @@ UISystem::~UISystem()
 
 	uint64_t player_id = players.at(0);
 
-	auto d_comp = ecs->getComponent<Component::Destructible>(player_id, Component::Type::DESTRUCTIBLE);
-	auto m_comp = ecs->getComponent<Component::Mana>(player_id, Component::Type::MANA);
-	auto s_comp = ecs->getComponent<Component::Skill>(player_id, Component::Type::SKILL);
+	auto d_comp = ecs->getComponent<Component::Destructible> (player_id, Component::Type::DESTRUCTIBLE);
+	auto m_comp = ecs->getComponent<Component::Mana>         (player_id, Component::Type::MANA);
+	auto s_comp = ecs->getComponent<Component::Skill>        (player_id, Component::Type::SKILL);
+	auto c_comp = ecs->getComponent<Component::Container>    (player_id, Component::Type::CONTAINER);
 
 	if(d_comp)
 	{
@@ -83,6 +84,25 @@ UISystem::~UISystem()
 		sstream << "INT: " << s_comp->skills[Component::Skill::INT] << "\n";
 
 		console->put_string(42, 9, sstream.str());
+	}
+	if(c_comp)
+	{
+		console->set_color(IConsole::Color::WHITE);
+
+		std::stringstream sstream;
+
+		sstream << "[[Inventory]]" << "\n";
+
+		for(uint64_t entity : c_comp->items)
+		{
+			auto e_n_comp = ecs->getComponent<Component::Name>(entity, Component::Type::NAME);
+
+			if(!e_n_comp) continue;
+
+			sstream << "\u2022 " << e_n_comp->text << "\n";
+		}
+
+		console->put_string(42, 15, sstream.str());
 	}
 }
 

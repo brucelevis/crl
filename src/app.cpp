@@ -103,6 +103,9 @@ void Application::mainloop()
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Player()));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Destructible(200)));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Mana(100)));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Dropper()));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Picker()));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Container()));
 
 	std::map<Component::Skill::SkillType, int16_t> skills;
 	skills[Component::Skill::SkillType::ATK] = 10;
@@ -137,6 +140,9 @@ void Application::mainloop()
 	entity = ecs.createEntity();
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(11, 11)));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( IConsole::Color::RED, '!')));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Pickable()));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Dropable()));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Name( "Testing thingy" )));
 	
 	for(int i = 0; i < 1; ++i)
 	{

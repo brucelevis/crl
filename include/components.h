@@ -15,6 +15,7 @@
 #include <map>
 #include <exception>
 #include <string>
+#include <vector>
 
 #include "console/iconsole.h"
 
@@ -53,12 +54,15 @@ namespace Component
 		NAME         = ((uint64_t)1 << 25), /*!< Name of the entity */
 		DESCRIPTION  = ((uint64_t)1 << 26), /*!< Description of the entity */
 		RARITY       = ((uint64_t)1 << 27), /*!< Determines how rare an entity is */
-		CONSUMABLE   = ((uint64_t)1 << 28), /*! Determines if something can be consumed */
-		EQUIPABLE    = ((uint64_t)1 << 29), /*! Determine if something can be equipped */
-		THROWER		 = ((uint64_t)1 << 30), /*! Can throw stuff */
-		TIMER        = ((uint64_t)1 << 31), /*! Does a specified action each x turns, multiple can be specied */
-		CLOUD        = ((uint64_t)1 << 32), /*! Used if entity is not solid, but blocked by walls & doors */
-		MANA		 = ((uint64_t)1 << 33)  /*! Used to keep track of mana for magic */
+		CONSUMABLE   = ((uint64_t)1 << 28), /*!< Determines if something can be consumed */
+		EQUIPABLE    = ((uint64_t)1 << 29), /*!< Determine if something can be equipped */
+		THROWER		 = ((uint64_t)1 << 30), /*!< Can throw stuff */
+		TIMER        = ((uint64_t)1 << 31), /*!< Does a specified action each x turns, multiple can be specied */
+		CLOUD        = ((uint64_t)1 << 32), /*!< Used if entity is not solid, but blocked by walls & doors */
+		MANA		 = ((uint64_t)1 << 33), /*!< Used to keep track of mana for magic */
+		DROPABLE	 = ((uint64_t)1 << 34), /*!< Determines if something can be dropped */
+		PICKER		 = ((uint64_t)1 << 35), /*!< Determines if something can pick stuff up */
+		DROPPER		 = ((uint64_t)1 << 36)  /*!< Determines if something can drop stuff */
 	};
 
 	struct Component {
@@ -398,6 +402,27 @@ namespace Component
 			Component(Type::MANA)
 		  , max_mana(max_mana)
 		  , cur_mana(max_mana)
+		{}
+	};
+
+	struct Dropable : Component
+	{
+		Dropable() :
+			Component(Type::DROPABLE)
+		{}
+	};
+
+	struct Picker : Component
+	{
+		Picker() :
+			Component(Type::PICKER)
+		{}
+	};
+
+	struct Dropper : Component
+	{
+		Dropper() :
+			Component(Type::DROPPER)
 		{}
 	};
 

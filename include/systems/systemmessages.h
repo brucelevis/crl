@@ -20,7 +20,11 @@ namespace SystemMessage
 		INPUT,
 		MOVEMENT,
 		ATTACK,
-		DAMAGE
+		DAMAGE,
+		STORETOCONTAINER,
+		REMOVEFROMCONTAINER,
+		DROP,
+		PICKUP
 	};
 
 	struct Message
@@ -84,6 +88,54 @@ namespace SystemMessage
 			Message(MessageType::DAMAGE)
 		  ,	target(target)
 		  , damage(damage)
+		{}
+	};
+
+	struct StoreInContainerMessage : public Message
+	{
+		uint64_t container;
+		uint64_t entity;
+
+		StoreInContainerMessage(uint64_t container, uint64_t entity) :
+			Message(MessageType::STORETOCONTAINER)
+		  ,	container(container)
+		  , entity(entity)
+		{}
+	};
+
+	struct RemoveFromContainerMessage : public Message
+	{
+		uint64_t container;
+		uint64_t entity;
+
+		RemoveFromContainerMessage(uint64_t container, uint64_t entity) :
+			Message(MessageType::REMOVEFROMCONTAINER)
+		  ,	container(container)
+		  , entity(entity)
+		{}
+	};
+
+	struct PickUpMessage : public Message
+	{
+		uint64_t picker;
+		uint64_t pickable;
+
+		PickUpMessage(uint64_t picker, uint64_t pickable) :
+			Message(MessageType::PICKUP)
+		  ,	picker(picker)
+		  , pickable(pickable)
+		{}
+	};
+
+	struct DropMessage : public Message
+	{
+		uint64_t dropper;
+		uint64_t dropable;
+
+		DropMessage(uint64_t dropper,uint64_t dropable) :
+			Message(MessageType::DROP)
+		  ,	dropper(dropper)
+		  , dropable(dropable)
 		{}
 	};
 

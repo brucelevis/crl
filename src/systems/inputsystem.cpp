@@ -70,6 +70,37 @@ void InputSystem::handleMessage(SystemMessage::TMessagePtr message, uint64_t ent
 		case TK_KP_3:
 			dx = 1; dy = 1;
 			break;
+		case TK_G:
+			{
+				auto p_comp = ecs->getComponent<Component::Position>(entity, Component::POSITION);
+
+				if(!p_comp) break;
+
+				auto c_ents = ecs->getEntitiesWithComponent(Component::POSITION);
+
+				std::vector<uint64_t> pick_targets;
+
+				// Gather all posible targets
+				for(uint64_t possible_target : c_ents)
+				{
+					if(possible_target == entity) continue;
+
+					auto p_p_comp = ecs->getComponent<Component::Position>(possible_target, Component::POSITION);
+
+					if(p_p_comp && p_p_comp->x == p_comp->x && p_p_comp->y == p_comp->y)
+					{
+						pick_targets.push_back(possible_target);
+					}
+				}
+
+				//TODO: CHOOSE IF MORE
+				if(!pick_targets.empty())
+				{
+					ecs->sendSystemMessage(ISystem::Type::CONTAINER,
+											SystemMessage::TMessagePtr(new SystemMessage::PickUpMessage(entity, pick_targets.at(0))));
+				}
+			}
+			break;
 		}
 
 		if(dx != 0 || dy != 0)

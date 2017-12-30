@@ -2,7 +2,9 @@
  * uisystem.cpp
  *
  *  Created on: Dec 30, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
+ *
+ *  Copyright (C) 2017 - Joshua Lettink
  */
 
 #include "systems/uisystem.h"

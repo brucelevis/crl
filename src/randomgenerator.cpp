@@ -3,6 +3,8 @@
  *
  *  Created on: Dec 21, 2017
  *      Author: Joshua Lettink
+ *
+ *  Copyright (C) 2017 - Joshua Lettink
  */
 
 #include <cfloat>

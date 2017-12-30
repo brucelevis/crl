@@ -3,6 +3,8 @@
  *
  *  Created on: Dec 18, 2017
  *      Author: Joshua Lettink
+ *
+ *  Copyright (C) 2017 - Joshua Lettink
  */
 
 #ifndef INCLUDE_CONSOLE_BEARLIBTERMINALCONSOLE_H_

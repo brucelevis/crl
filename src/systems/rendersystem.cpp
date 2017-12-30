@@ -1,3 +1,13 @@
+/*
+ * inputsystem.h
+ *
+ *  Created on: Dec 15, 2017
+ *      Author: Joshua Lettink
+ *
+ *  Copyright (C) 2017 - Joshua Lettink
+ */
+
+
 #include "systems/rendersystem.h"
 
 #include "console/iconsole.h"

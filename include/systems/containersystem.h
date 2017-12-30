@@ -2,7 +2,7 @@
  * containersystem.h
  *
  *  Created on: Dec 30, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #ifndef INCLUDE_SYSTEMS_CONTAINERSYSTEM_H_

@@ -3,6 +3,8 @@
  *
  *  Created on: Dec 15, 2017
  *      Author: Joshua Lettink
+ *
+ *  Copyright (C) 2017 - Joshua Lettink
  */
 
 #ifndef INCLUDE_RENDERSYSTEM_H_

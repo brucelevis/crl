@@ -2,7 +2,9 @@
  * uisystem.h
  *
  *  Created on: Dec 30, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
+ *
+ *  Copyright (C) 2017 - Joshua Lettink
  */
 
 #ifndef INCLUDE_SYSTEMS_UISYSTEM_H_

@@ -1,3 +1,13 @@
+/*
+ * inputsystem.h
+ *
+ *  Created on: Dec 30, 2017
+ *      Author: Joshua Lettink
+ *
+ *  Copyright (C) 2017 - Joshua Lettink
+ */
+
+
 #include "components.h"
 
 namespace Component

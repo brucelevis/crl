@@ -2,7 +2,7 @@
  * include_everywhere.h
  *
  *  Created on: Dec 22, 2017
- *      Author: joshua
+ *      Author: Joshua Lettink
  */
 
 #ifndef INCLUDE_DEPRECATED_H_

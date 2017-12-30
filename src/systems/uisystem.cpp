@@ -25,7 +25,7 @@ UISystem::~UISystem()
 
 /* virtual */ void UISystem::update(ECS* ecs, float delta) /* = 0 */
 {
-	//IConsole::Instance()->set_char()
+	IConsole::Instance()->put_string(41, 10, "Test string");
 }
 
 

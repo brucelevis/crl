@@ -28,6 +28,7 @@ public:
 
 	virtual void set_color(Color color);
 	virtual void set_char(uint16_t x, uint16_t y, uint16_t ch);
+	virtual void put_string(uint16_t x, uint16_t y, const std::string& string);
 
 	virtual void cleanup();
 	virtual void refresh();

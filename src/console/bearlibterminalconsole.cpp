@@ -70,6 +70,11 @@ BearLibTerminalConsole::BearLibTerminalConsole(uint16_t width, uint16_t height) 
 	terminal_put(x, y, ch);
 }
 
+/* virtual */ void BearLibTerminalConsole::put_string(uint16_t x, uint16_t y, const std::string& string)
+{
+	terminal_print(x, y, string.c_str());
+}
+
 /* virtual */ void BearLibTerminalConsole::cleanup()
 {
 	terminal_close();

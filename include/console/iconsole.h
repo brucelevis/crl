@@ -10,6 +10,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <string>
 
 class IConsole
 {
@@ -61,6 +62,14 @@ public:
 	 * \param ch The char to put on screen
 	 */
 	virtual void set_char(uint16_t x, uint16_t y, uint16_t ch) = 0;
+
+	//! Puts a string at the specified location
+	/*!
+	 * \param x X location of the string
+	 * \param y Y location of the string
+	 * \param string The string to put on the screen
+	 */
+	virtual void put_string(uint16_t x, uint16_t y, const std::string& string) = 0;
 
 	//! Cleans up the console
 	virtual void cleanup() = 0;

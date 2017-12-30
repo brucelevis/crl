@@ -57,7 +57,8 @@ namespace Component
 		EQUIPABLE    = ((uint64_t)1 << 29), /*! Determine if something can be equipped */
 		THROWER		 = ((uint64_t)1 << 30), /*! Can throw stuff */
 		TIMER        = ((uint64_t)1 << 31), /*! Does a specified action each x turns, multiple can be specied */
-		CLOUD        = ((uint64_t)1 << 32)  /*! Used if entity is not solid, but blocked by walls & doors */
+		CLOUD        = ((uint64_t)1 << 32), /*! Used if entity is not solid, but blocked by walls & doors */
+		MANA		 = ((uint64_t)1 << 33)  /*! Used to keep track of mana for magic */
 	};
 
 	struct Component {
@@ -253,6 +254,8 @@ namespace Component
 	//! Can contain other entities
 	struct Container : Component
 	{
+		std::vector<uint64_t> items;
+
 		Container() :
 			Component(Type::CONTAINER)
 		{}
@@ -382,6 +385,19 @@ namespace Component
 	{
 		Cloud() :
 			Component(Type::CLOUD)
+		{}
+	};
+
+	//! Mana component, used to keep track of mana for magic
+	struct Mana : public Component
+	{
+		uint16_t max_mana; /*! Maximum hp */
+		uint16_t cur_mana; /*! Current hp */
+
+		Mana(uint16_t max_mana) :
+			Component(Type::MANA)
+		  , max_mana(max_mana)
+		  , cur_mana(max_mana)
 		{}
 	};
 

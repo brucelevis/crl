@@ -102,6 +102,7 @@ void Application::mainloop()
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Attack(10)));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Player()));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Destructible(200)));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Mana(100)));
 
 	std::map<Component::Skill::SkillType, int16_t> skills;
 	skills[Component::Skill::SkillType::ATK] = 10;
@@ -146,14 +147,14 @@ void Application::mainloop()
 		ecs.registerComponent(entity, Component::TComponentPtr(new Component::Destructible(30)));
 		ecs.registerComponent(entity, Component::TComponentPtr(new Component::Attack(10)));
 		ecs.registerComponent(entity, Component::TComponentPtr(new Component::Solid()));
-		//ecs.registerComponent(entity, Component::TComponentPtr(new Component::Target( player_entity )));
+		ecs.registerComponent(entity, Component::TComponentPtr(new Component::Target( player_entity )));
 	}
 
-	uint64_t ai_entity = entity;
-	entity = ecs.createEntity();
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(0, 0)));
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Camera( 9, 9, 72, 0 )));
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Target( ai_entity )));
+//	uint64_t ai_entity = entity;
+//	entity = ecs.createEntity();
+//	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(0, 0)));
+//	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Camera( 9, 9, 72, 0 )));
+//	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Target( ai_entity )));
 
 	Tiles::createDefinition(1, Tiles::Flags::BLOCKING,    IConsole::Color::WHITE, '#');
 	Tiles::createDefinition(2, 0, IConsole::Color::WHITE, 0);

@@ -17,5 +17,6 @@
 #include "systems/attacksystem.h"
 #include "systems/destructiblesystem.h"
 #include "systems/containersystem.h"
+#include "systems/uisystem.h"
 
 #endif /* INCLUDE_SYSTEMS_H_ */

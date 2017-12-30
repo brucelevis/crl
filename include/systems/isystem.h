@@ -35,7 +35,8 @@ public:
 		MOVEMENT, 		/*!< Movement system */
 		CAMERA,   		/*!< Camera/viewport system */
 		MAP,      		/*!< Map system */
-		RENDER    		/*!< Rendering system */
+		RENDER,   		/*!< Rendering system */
+		UI				/*!< User interface rendering system */
 	};
 
 	//! Constructor

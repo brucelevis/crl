@@ -110,6 +110,7 @@ void Application::mainloop()
 	ecs.addSystem<AttackSystem>();
 	ecs.addSystem<DestructibleSystem>();
 	ecs.addSystem<ContainerSystem>();
+	ecs.addSystem<UISystem>();
 	
 	//ecs.setPlayerId(entity);
 
@@ -118,7 +119,7 @@ void Application::mainloop()
 	// create camera that follows the player
 	entity = ecs.createEntity();
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(0, 0)));
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Camera( 40, 20, 10, 4 )));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Camera( 40, 20, 0, 0 )));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Target( player_entity )));
 	//ecs.setActiveCamera(entity);
 

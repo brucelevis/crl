@@ -20,26 +20,28 @@ MapGenerator::MapGenerator(const MapGeneratorConfig& config) :
 
 void MapGenerator::split_bsp(std::vector<BSPNode*>& leafs, BSPNode* node, uint8_t level /* = 1 */) const
 {
+	auto rng = RandomGenerator::Instance();
+
 	uint16_t min_bsp_width  = config.min_bsp_width;
 	uint16_t min_bsp_height = config.min_bsp_height;
 
 	if(min_bsp_width  < config.min_room_width  + 2) min_bsp_width  = config.min_room_width  + 2;
 	if(min_bsp_height < config.min_room_height + 2) min_bsp_height = config.min_room_height + 2;
 
+	bool stop_split = rng->randBool(config.split_stop_chance, true) && level >= config.min_bsp_recursion;
+
 	if(node == nullptr) return;
-	if(level >= config.max_bsp_recursion)
+	if(level >= config.max_bsp_recursion || stop_split)
 	{
 		node->is_leaf = true;
 		leafs.push_back(node);
 		return;
 	}
 
-	auto rng = RandomGenerator::Instance();
-
 	float split_range = 0.2f;
 	// if current node is < size * 2 we cannot split anymore
-	bool min_horizontal_reached = node->x1 - node->x0 < min_bsp_width * 2;
-	bool min_vertical_reached   = node->y1 - node->y0 < min_bsp_height * 2;
+	bool min_horizontal_reached = node->x1 - node->x0 <= min_bsp_width  * 2;
+	bool min_vertical_reached   = node->y1 - node->y0 <= min_bsp_height * 2;
 
 	// we really cannot split in any way
 	if(min_horizontal_reached && min_vertical_reached)
@@ -53,7 +55,7 @@ void MapGenerator::split_bsp(std::vector<BSPNode*>& leafs, BSPNode* node, uint8_
 	bool horizontal_split = rng->randBool(50, true);
 
 	// we want to split horizontally, but we make sure we can!
-	if(horizontal_split && !min_vertical_reached)
+	if((horizontal_split && !min_vertical_reached) || min_horizontal_reached)
 	{
 		// split bounds (if we go higher or lower a new room is too small)
 		uint16_t min_y  = node->y0 + min_bsp_height;
@@ -83,8 +85,8 @@ void MapGenerator::split_bsp(std::vector<BSPNode*>& leafs, BSPNode* node, uint8_
 				  , (uint16_t)(diff * (1.0f - split_range)));
 		}
 
-		node->left  = new BSPNode(node->x0, node->y0, node->x1, rand_y,   node);
-		node->right = new BSPNode(node->x0, rand_y,   node->x1, node->y1, node);
+		node->left  = new BSPNode(node->x0, node->y0,   node->x1, rand_y,   node);
+		node->right = new BSPNode(node->x0, rand_y - 1, node->x1, node->y1, node);
 
 		node->left->sister  = node->right;
 		node->right->sister = node->left;
@@ -119,8 +121,8 @@ void MapGenerator::split_bsp(std::vector<BSPNode*>& leafs, BSPNode* node, uint8_
 				  , (uint16_t)(diff * (1.0f - split_range)));
 		}
 
-		node->left  = new BSPNode(node->x0, node->y0, rand_x,   node->y1, node);
-		node->right = new BSPNode(rand_x,   node->y0, node->x1, node->y1, node);
+		node->left  = new BSPNode(node->x0,   node->y0, rand_x,   node->y1, node);
+		node->right = new BSPNode(rand_x - 1, node->y0, node->x1, node->y1, node);
 
 		node->left->sister  = node->right;
 		node->right->sister = node->left;
@@ -145,17 +147,26 @@ std::shared_ptr<Map> MapGenerator::generate() const
 	BSPNode root (0, 0, width - 1, height - 1, nullptr);
 	split_bsp(leafs, &root);
 
+	// Carve rooms into the leafs
 	for(auto node : leafs)
 	{
 		int room_width  = rng->randBetween(config.min_room_width,  node->x1 - node->x0 - 2, true);
 		int room_height = rng->randBetween(config.min_room_height, node->y1 - node->y0 - 2, true);
 
+		uint16_t center_x = (node->x1 - node->x0) / 2 + node->x0;
+		uint16_t center_y = (node->y1 - node->y0) / 2 + node->y0;
+
+		uint16_t room_x0 = center_x - (room_width  / 2);
+		uint16_t room_x1 = center_x + (room_width  / 2);
+		uint16_t room_y0 = center_y - (room_height / 2);
+		uint16_t room_y1 = center_y + (room_height / 2);
+
 		for(int x = node->x0; x < node->x1; ++x)
 		{
 			for(int y = node->y0; y < node->y1; ++y)
 			{
-//				if( x <= node->x1 - room_width  && x >= node->x0 + room_width &&
-//					y <= node->y1 - room_height && y >= node->y0 + room_height)
+				if( x > room_x0 && x < room_x1 &&
+					y > room_y0 && y < room_y1)
 				{
 					new_map->tiles[x][y] = Tiles::getIDByName("floor_basic");
 				}
@@ -198,7 +209,7 @@ std::shared_ptr<Map> MapGenerator::generate() const
 	{
 		for(uint16_t y = 0; y < height; ++y)
 		{
-			new_map->visibility_map[x][y] = Map::Visibility::INVISIBLE;
+			new_map->visibility_map[x][y] = Map::Visibility::SEEN;
 		}
 	}
 

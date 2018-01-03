@@ -42,6 +42,8 @@ public:
 	uint16_t min_bsp_width;      /*! Minimum bsp width */
 	uint16_t min_bsp_height;     /*! Minimum bsp width */
 	uint8_t max_bsp_recursion;   /*! Determines max recursion if a BSP tree is used */
+	uint8_t min_bsp_recursion;   /*! Minimum bsp levels before split stop is possible */
+	uint8_t split_stop_chance;   /*! Chance to stop splitting to create a bigger room (0 - 100) */
 
 	bool generate_down_stairs;	 /*! Determines if down stairs should be generated */
 	bool generate_up_stairs;     /*! Determines if up stairs should be generated */
@@ -62,6 +64,8 @@ public:
 	  , min_bsp_width(12)
 	  , min_bsp_height(12)
 	  , max_bsp_recursion(4)
+	  , min_bsp_recursion(4)
+	  , split_stop_chance(15)
 	  , generate_down_stairs(true)
 	  , generate_up_stairs(true)
 	  , depth_level(0)

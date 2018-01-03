@@ -97,7 +97,7 @@ void Application::mainloop()
 	ecs.init();
 
 	uint64_t entity = ecs.createEntity();
-	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(10, 10)));
+	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Position(15, 15)));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Render( IConsole::Color::WHITE, '@', 1)));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Input()));
 	ecs.registerComponent(entity, Component::TComponentPtr(new Component::Solid()));

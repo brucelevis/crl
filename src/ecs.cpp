@@ -34,10 +34,10 @@ void ECS::init()
 {
 	MapGeneratorConfig config;
 
-	config.min_width  = 35;
-	config.max_width  = 40;
-	config.min_height = 20;
-	config.max_height = 24;
+	config.min_width  = 70;
+	config.max_width  = 140;
+	config.min_height = 80;
+	config.max_height = 144;
 	config.max_bsp_recursion = 16;
 	config.type       = MapGeneratorConfig::DUNGEON;
 

@@ -92,7 +92,7 @@ bool RandomGenerator::randBool(uint8_t chance /* = 50 */, bool use_map_seed /* f
 {
 	 std::uniform_int_distribution<uint8_t> uniform_dist(0, 100);
 
-	 return uniform_dist(use_map_seed ? rand_engine_map : rand_engine_global) >= chance;
+	 return uniform_dist(use_map_seed ? rand_engine_map : rand_engine_global) <= chance;
 }
 
 

@@ -7,6 +7,7 @@
 
 #include <vector>
 
+#include "tiles.h"
 #include "generators/mapgenerator.h"
 #include "map.h"
 #include "randomgenerator.h"
@@ -19,6 +20,12 @@ MapGenerator::MapGenerator(const MapGeneratorConfig& config) :
 
 void MapGenerator::split_bsp(std::vector<BSPNode*>& leafs, BSPNode* node, uint8_t level /* = 1 */) const
 {
+	uint16_t min_bsp_width  = config.min_bsp_width;
+	uint16_t min_bsp_height = config.min_bsp_height;
+
+	if(min_bsp_width  < config.min_room_width  + 2) min_bsp_width  = config.min_room_width  + 2;
+	if(min_bsp_height < config.min_room_height + 2) min_bsp_height = config.min_room_height + 2;
+
 	if(node == nullptr) return;
 	if(level >= config.max_bsp_recursion)
 	{
@@ -31,8 +38,8 @@ void MapGenerator::split_bsp(std::vector<BSPNode*>& leafs, BSPNode* node, uint8_
 
 	float split_range = 0.2f;
 	// if current node is < size * 2 we cannot split anymore
-	bool min_horizontal_reached = node->x1 - node->x0 < config.min_room_width * 2;
-	bool min_vertical_reached   = node->y1 - node->y0 < config.min_room_width * 2;
+	bool min_horizontal_reached = node->x1 - node->x0 < min_bsp_width * 2;
+	bool min_vertical_reached   = node->y1 - node->y0 < min_bsp_height * 2;
 
 	// we really cannot split in any way
 	if(min_horizontal_reached && min_vertical_reached)
@@ -49,8 +56,8 @@ void MapGenerator::split_bsp(std::vector<BSPNode*>& leafs, BSPNode* node, uint8_
 	if(horizontal_split && !min_vertical_reached)
 	{
 		// split bounds (if we go higher or lower a new room is too small)
-		uint16_t min_y  = node->y0 + config.min_room_height;
-		uint16_t max_y  = node->y1 - config.min_room_height;
+		uint16_t min_y  = node->y0 + min_bsp_height;
+		uint16_t max_y  = node->y1 - min_bsp_height;
 
 		if(min_y > max_y)
 		{
@@ -85,8 +92,8 @@ void MapGenerator::split_bsp(std::vector<BSPNode*>& leafs, BSPNode* node, uint8_
 	else
 	{
 		// split bounds (if we go higher or lower a new room is too small)
-		uint16_t min_x  = node->x0 + config.min_room_width;
-		uint16_t max_x  = node->x1 - config.min_room_width;
+		uint16_t min_x  = node->x0 + min_bsp_width;
+		uint16_t max_x  = node->x1 - min_bsp_width;
 
 		if(min_x > max_x)
 		{
@@ -140,17 +147,21 @@ std::shared_ptr<Map> MapGenerator::generate() const
 
 	for(auto node : leafs)
 	{
+		int room_width  = rng->randBetween(config.min_room_width,  node->x1 - node->x0 - 2, true);
+		int room_height = rng->randBetween(config.min_room_height, node->y1 - node->y0 - 2, true);
+
 		for(int x = node->x0; x < node->x1; ++x)
 		{
 			for(int y = node->y0; y < node->y1; ++y)
 			{
-				if(x == node->x0 || x == node->x1 -1 || y == node->y0 || y == node->y1 -1)
+//				if( x <= node->x1 - room_width  && x >= node->x0 + room_width &&
+//					y <= node->y1 - room_height && y >= node->y0 + room_height)
 				{
-					new_map->tiles[x][y] = 1;
+					new_map->tiles[x][y] = Tiles::getIDByName("floor_basic");
 				}
 				else
 				{
-					new_map->tiles[x][y] = 2;
+					new_map->tiles[x][y] = Tiles::getIDByName("wall_basic");
 				}
 			}
 		}
@@ -173,7 +184,7 @@ std::shared_ptr<Map> MapGenerator::generate() const
 			{
 				for(uint16_t y = start_y; y <= end_y; ++y)
 				{
-					new_map->tiles[x][y] = 2;
+					new_map->tiles[x][y] = new_map->tiles[x][y] = Tiles::getIDByName("floor_basic");
 				}
 			}
 

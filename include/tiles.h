@@ -14,6 +14,7 @@
 #include <map>
 #include <sstream>
 #include <bitset>
+#include <string>
 
 #include "console/iconsole.h"
 #include "logger.h"
@@ -49,11 +50,14 @@ namespace Tiles
 		}
 	};
 
+	extern std::map<std::string, uint16_t> tilenames;
 	extern std::map<uint16_t, TileDefinition> tiledefs;
 
 	extern const TileDefinition& getDefinition(uint16_t defid);
+	extern const TileDefinition& getDefinitionByName(const std::string& name);
+	extern uint16_t getIDByName(const std::string& name);
 
-	extern void createDefinition(uint16_t defid, uint16_t flags, IConsole::Color color, uint16_t glyph);
+	extern void createDefinition(uint16_t defid, const std::string& name, uint16_t flags, IConsole::Color color, uint16_t glyph);
 }
 
 

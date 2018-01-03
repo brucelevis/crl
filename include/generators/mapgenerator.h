@@ -39,6 +39,8 @@ public:
 	uint16_t min_room_width;     /*! Minimum room width */
 	uint16_t min_room_height;    /*! Minimum room height */
 
+	uint16_t min_bsp_width;      /*! Minimum bsp width */
+	uint16_t min_bsp_height;     /*! Minimum bsp width */
 	uint8_t max_bsp_recursion;   /*! Determines max recursion if a BSP tree is used */
 
 	bool generate_down_stairs;	 /*! Determines if down stairs should be generated */
@@ -57,6 +59,8 @@ public:
 	  , max_height(100)
 	  , min_room_width(10)
 	  , min_room_height(10)
+	  , min_bsp_width(12)
+	  , min_bsp_height(12)
 	  , max_bsp_recursion(4)
 	  , generate_down_stairs(true)
 	  , generate_up_stairs(true)

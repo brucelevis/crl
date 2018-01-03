@@ -71,6 +71,8 @@ int RandomGenerator::randDelta(bool use_map_seed /* = false */)
 
 int RandomGenerator::randBetween(int min, int max, bool use_map_seed /* = false */)
 {
+	if(min >= max) return min;
+
 	 std::uniform_int_distribution<int> uniform_dist(min, max);
 
 	 return uniform_dist(use_map_seed ? rand_engine_map : rand_engine_global);
@@ -78,6 +80,8 @@ int RandomGenerator::randBetween(int min, int max, bool use_map_seed /* = false 
 
 float RandomGenerator::randFloat(float min, float max, bool use_map_seed /* = false */)
 {
+	if(min >= max) return min;
+
 	// Nextafter is used to make max inclusive
 	std::uniform_real_distribution<float> uniform_dist(min, std::nextafter(max, FLT_MAX));
 

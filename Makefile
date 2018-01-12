@@ -14,7 +14,7 @@ CFLAGS= $(IDIRS) -std=c++11 -Wall -Werror
 OSFLAGS=
 
 #set libs
-LIBS=-lcurses -lBearLibTerminal
+LIBS=-lBearLibTerminal
 
 #set extension
 CPP_EXT := cpp
@@ -28,7 +28,7 @@ ifeq ($(OS),Windows_NT)
     RM = del /F /Q 
     RMDIR = -RMDIR /S /Q
     MKDIR = mkdir
-    ERRIGNORE = 2>nul
+    ERRIGNORE = 
 	SEP=\\
 else
 	LIBS += -lfreetype2 -lpicopng -lGL -lX11 -ldl
@@ -47,11 +47,11 @@ SOURCEDIRS = $(foreach dir, $(SDIRS), $(addprefix $(PROJDIR), $(dir)))
 
 #determine if to build debug or release
 ifeq ($(DEBUG),1)
-	ABUILDDIR := $(PROJDIR)$(PSEP)build$(PSEP)debug
+	ABUILDDIR := $(PROJDIR)build$(PSEP)debug
 	CFLAGS += -DDEBUG -g	
 	CFLAGS += $(OSFLAGS)
 else
-	ABUILDDIR := $(PROJDIR)$(PSEP)build$(PSEP)release
+	ABUILDDIR := $(PROJDIR)build$(PSEP)release
 	CFLAGS += -O2 -DNDEBUG
 	CFLAGS += $(OSFLAGS)
 endif
@@ -80,10 +80,9 @@ $(1)/%.o: %.$(CPP_EXT)
 	$(HIDE) $(CC) -c -o $$(subst /,$$(PSEP),$$@) $$(subst /,$$(PSEP),$$<) $(CFLAGS)
 endef
 
-.PHONY: all clean debug install directories
+.PHONY: clean debug directories
 
 all: directories $(TARGET)
-$(TARGET): directories
 
 #link target
 $(TARGET): $(OBJS)
@@ -95,7 +94,7 @@ $(foreach targetdir, $(TARGETDIRS), $(eval $(call generateRules, $(targetdir))))
 directories: 
 	@echo Creating directories
 ifeq ($(OS),Windows_NT)
-	$(HIDE) if not exist $(subst /,$(PSEP),$(TARGETDIRS)) $(MKDIR) $(subst /,$(PSEP),$(TARGETDIRS)) $(ERRIGNORE)
+	@$(foreach targetdir, $(TARGETDIRS), $(shell if not exist $(subst /,$(PSEP),$(targetdir)) $(MKDIR) $(subst /,$(PSEP),$(targetdir)) $(ERRIGNORE)))
 else
 	$(HIDE) $(MKDIR) $(subst /,$(PSEP),$(TARGETDIRS)) $(ERRIGNORE)
 endif
@@ -107,7 +106,3 @@ clean:
 ifeq ($(PREFIX),)
     PREFIX := /usr/local
 endif
-
-install: crl
-	install -d $(PREFIX)/lib
-	install -m 644 $(LDIR)/*.so $(PREFIX)/lib

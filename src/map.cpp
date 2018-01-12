@@ -161,7 +161,7 @@ void Map::castLight(
     float next_start_slope = start_slope;
 
     // Go over each row in the octant
-    for (uint i = row; i <= radius; i++)
+    for (unsigned int i = row; i <= radius; i++)
     {
         bool blocked = false;
 
@@ -185,15 +185,15 @@ void Map::castLight(
             int say = dx * yx + dy * yy;
 
             // Ensure we stay in bounds
-            if (    (sax < 0 && (uint)std::abs(sax) > x)
-                 || (say < 0 && (uint)std::abs(say) > y)
+            if (    (sax < 0 && (unsigned int)std::abs(sax) > x)
+                 || (say < 0 && (unsigned int)std::abs(say) > y)
 			   )
             {
                 continue;
             }
 
-            uint ax = x + sax;
-            uint ay = y + say;
+            unsigned int ax = x + sax;
+            unsigned int ay = y + say;
 
             // Ensure we stay in bounds
             if (ax >= width || ay >= height)
@@ -201,10 +201,10 @@ void Map::castLight(
                 continue;
             }
 
-            uint radius2 = radius * radius;
+            unsigned int radius2 = radius * radius;
 
             // Determine if current tile is within FOV
-            if ((uint)(dx * dx + dy * dy) < radius2)
+            if ((unsigned int)(dx * dx + dy * dy) < radius2)
             {
                 visibility_map[ax][ay] = Visibility::VISIBLE;
             }
@@ -244,7 +244,7 @@ void Map::calculateFOV(uint16_t x, uint16_t y)
 {
 	if(!initialized) throw std::runtime_error("map not initialized!");
 
-    uint radius = 10;
+    unsigned int radius = 10;
 
     // Make all previous visible tiles seen
     for(uint16_t yy = 0; yy < height; ++yy)

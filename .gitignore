@@ -5,6 +5,7 @@ autom4te.cache
 autoscan.log
 compile
 depcomp
+configure
 install-sh
 missing
 src/Makefile.in

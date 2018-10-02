@@ -13,20 +13,20 @@
 class Application
 {
 public:
-	Application();
-	~Application();
-	
-	int run();
-	void cleanup();
+  Application();
+  ~Application();
+  
+  int run();
+  void cleanup();
 private:
-	int last_key_pressed;
+  int last_key_pressed;
 
-	void initialize();
-	
-	void update();
-	void renderFrame();
-	
-	void mainloop();
+  void initialize();
+  
+  void update();
+  void renderFrame();
+  
+  void mainloop();
 };
 
 #endif /* INCLUDE_APP_H_ */

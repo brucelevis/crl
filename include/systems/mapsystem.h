@@ -16,7 +16,7 @@
 class MapSystem : public ISystem
 {
 public:
-	MapSystem();
+  MapSystem();
     ~MapSystem();
 
     virtual void update(ECS* ecs, float delta) /* = 0 */;

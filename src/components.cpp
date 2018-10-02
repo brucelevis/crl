@@ -12,22 +12,22 @@
 
 namespace Component
 {
-	bool hasComponent(uint16_t cbits, Type t)
-	{
-		return (cbits & static_cast<uint16_t>(t)) > 0;
-	}
+  bool hasComponent(uint16_t cbits, Type t)
+  {
+    return (cbits & static_cast<uint16_t>(t)) > 0;
+  }
 
-	TComponentPtr createNew(Type componentType)
-	{
-		switch(componentType)
-		{
-		case Type::POSITION:
-			return std::make_shared<Position>();
-		case Type::RENDER:
-			return std::make_shared<Render>();
-		case Type::NONE:
-		default:
-			return nullptr;
-		}
-	}
+  TComponentPtr createNew(Type componentType)
+  {
+    switch(componentType)
+    {
+    case Type::POSITION:
+      return std::make_shared<Position>();
+    case Type::RENDER:
+      return std::make_shared<Render>();
+    case Type::NONE:
+    default:
+      return nullptr;
+    }
+  }
 }

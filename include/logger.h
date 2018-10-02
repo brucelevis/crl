@@ -21,7 +21,7 @@
 class Logger
 {
 public:
-	//! Loglevel enum
+  //! Loglevel enum
     enum class Level 
     {
         LCRITICAL   = 0, /*< Critical message */

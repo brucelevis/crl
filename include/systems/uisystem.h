@@ -16,7 +16,7 @@
 class UISystem : public ISystem
 {
 public:
-	UISystem();
+  UISystem();
     ~UISystem();
 
     virtual void update(ECS* ecs, float delta) /* = 0 */;
@@ -39,19 +39,19 @@ private:
      * \param horizontal If true bar will be drawn horizontal, otherwise vertical
      */
     void drawProgressBar(
-    		uint16_t x,
-			uint16_t y,
-			uint16_t size,
-			uint16_t min,
-			uint16_t max,
-			uint16_t value,
-			uint16_t low_value = 0,
-			IConsole::Color color_background = IConsole::Color::WHITE,
-			IConsole::Color color_foreground = IConsole::Color::GREEN,
-			IConsole::Color color_low        = IConsole::Color::RED,
-			uint16_t char_foreground = '=',
-			uint16_t char_background = '-',
-			bool horizontal = true);
+        uint16_t x,
+      uint16_t y,
+      uint16_t size,
+      uint16_t min,
+      uint16_t max,
+      uint16_t value,
+      uint16_t low_value = 0,
+      IConsole::Color color_background = IConsole::Color::WHITE,
+      IConsole::Color color_foreground = IConsole::Color::GREEN,
+      IConsole::Color color_low        = IConsole::Color::RED,
+      uint16_t char_foreground = '=',
+      uint16_t char_background = '-',
+      bool horizontal = true);
 };
 
 #endif /* INCLUDE_SYSTEMS_UISYSTEM_H_ */

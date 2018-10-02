@@ -20,7 +20,7 @@ class ECS;
 class InputSystem : public ISystem
 {
 public:
-	InputSystem();
+  InputSystem();
     ~InputSystem();
 
     virtual void update(ECS* ecs, float delta) /* = 0 */;

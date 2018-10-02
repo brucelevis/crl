@@ -15,7 +15,7 @@
 class CameraSystem : public ISystem
 {
 public:
-	CameraSystem();
+  CameraSystem();
     ~CameraSystem();
 
     virtual void update(ECS* ecs, float delta) /* = 0 */;

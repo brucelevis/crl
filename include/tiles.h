@@ -23,41 +23,41 @@
 
 namespace Tiles
 {
-	enum Flags
-	{
-		NONE        = 0,
-		TRANSPARENT = (1 << 0),
-		BLOCKING    = (1 << 1)
-	};
+  enum Flags
+  {
+    NONE        = 0,
+    TRANSPARENT = (1 << 0),
+    BLOCKING    = (1 << 1)
+  };
 
-	struct TileDefinition
-	{
-		uint16_t flags;
+  struct TileDefinition
+  {
+    uint16_t flags;
 
-		IConsole::Color  color;
-		IConsole::Color  darker_color;
+    IConsole::Color  color;
+    IConsole::Color  darker_color;
 
-		uint16_t glyph;
+    uint16_t glyph;
 
-		TileDefinition& operator=(const TileDefinition& def)
-		{
-			flags 		 = def.flags;
-			color 		 = def.color;
-			darker_color = def.darker_color;
-			glyph 		 = def.glyph;
+    TileDefinition& operator=(const TileDefinition& def)
+    {
+      flags      = def.flags;
+      color      = def.color;
+      darker_color = def.darker_color;
+      glyph      = def.glyph;
 
-			return *this;
-		}
-	};
+      return *this;
+    }
+  };
 
-	extern std::map<std::string, uint16_t> tilenames;
-	extern std::map<uint16_t, TileDefinition> tiledefs;
+  extern std::map<std::string, uint16_t> tilenames;
+  extern std::map<uint16_t, TileDefinition> tiledefs;
 
-	extern const TileDefinition& getDefinition(uint16_t defid);
-	extern const TileDefinition& getDefinitionByName(const std::string& name);
-	extern uint16_t getIDByName(const std::string& name);
+  extern const TileDefinition& getDefinition(uint16_t defid);
+  extern const TileDefinition& getDefinitionByName(const std::string& name);
+  extern uint16_t getIDByName(const std::string& name);
 
-	extern void createDefinition(uint16_t defid, const std::string& name, uint16_t flags, IConsole::Color color, uint16_t glyph);
+  extern void createDefinition(uint16_t defid, const std::string& name, uint16_t flags, IConsole::Color color, uint16_t glyph);
 }
 
 

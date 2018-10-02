@@ -16,7 +16,7 @@
 class DestructibleSystem : public ISystem
 {
 public:
-	DestructibleSystem();
+  DestructibleSystem();
     ~DestructibleSystem();
 
     virtual void update(ECS* ecs, float delta) /* = 0 */;

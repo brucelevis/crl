@@ -17,34 +17,34 @@ class ECS;
 class HistoryGenerator
 {
 public:
-	HistoryGenerator();
-	~HistoryGenerator();
+  HistoryGenerator();
+  ~HistoryGenerator();
 
-	void generate(ECS* ecs);
+  void generate(ECS* ecs);
 
 private:
-	enum States
-	{
-		ST_VOID,
-		ST_DEITY_CREATION,
-		ST_HISTORY_STEP,
-		ST_UNIVERSE_CREATION,
-		ST_DONE
-	};
+  enum States
+  {
+    ST_VOID,
+    ST_DEITY_CREATION,
+    ST_HISTORY_STEP,
+    ST_UNIVERSE_CREATION,
+    ST_DONE
+  };
 
-	/*
-	 *
-	 *     Initial state: Void -> Deity_creation
+  /*
+   *
+   *     Initial state: Void -> Deity_creation
     Deity_creation -> History_step || Universe_creation
     History_step -> History_step || Universe_creation (if no universe yet) || Done (if universe plus some additional history (x steps))
     Universe_creation -> History_step
     Done -> Done
-	 */
+   */
 
-	std::vector<uint64_t> entities;
+  std::vector<uint64_t> entities;
 
-	void generateUniverse(ECS* ecs);
-	void step(ECS* ecs);
+  void generateUniverse(ECS* ecs);
+  void step(ECS* ecs);
 };
 
 

@@ -15,17 +15,17 @@
 class AISystem : public ISystem
 {
 public:
-	AISystem();
+  AISystem();
     ~AISystem();
 
     virtual void update(ECS* ecs, float delta) /* = 0 */;
 
 private:
-    void runDumbAI			(ECS* ecs, uint64_t entity, float delta);
-    void runAnimalAI		(ECS* ecs, uint64_t entity, float delta);
-    void runIntelligentAI	(ECS* ecs, uint64_t entity, float delta);
-    void runOmniscientAI	(ECS* ecs, uint64_t entity, float delta);
-    void runPlayerAI		(ECS* ecs, uint64_t entity, float delta);
+    void runDumbAI      (ECS* ecs, uint64_t entity, float delta);
+    void runAnimalAI    (ECS* ecs, uint64_t entity, float delta);
+    void runIntelligentAI (ECS* ecs, uint64_t entity, float delta);
+    void runOmniscientAI  (ECS* ecs, uint64_t entity, float delta);
+    void runPlayerAI    (ECS* ecs, uint64_t entity, float delta);
 };
 
 

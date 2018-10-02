@@ -16,7 +16,7 @@
 class AttackSystem : public ISystem
 {
 public:
-	AttackSystem();
+  AttackSystem();
     ~AttackSystem();
 
     virtual void update(ECS* ecs, float delta) /* = 0 */;

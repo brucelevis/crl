@@ -16,7 +16,7 @@
 class MovementSystem : public ISystem
 {
 public:
-	MovementSystem();
+  MovementSystem();
     ~MovementSystem();
 
     virtual void update(ECS* ecs, float delta) /* = 0 */;

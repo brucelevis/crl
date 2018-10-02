@@ -4,7 +4,6 @@ aclocal.m4
 autom4te.cache
 autoscan.log
 configure
-missing
 src/Makefile.in
 .deps
 config.log

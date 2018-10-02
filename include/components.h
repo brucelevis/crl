@@ -62,7 +62,9 @@ namespace Component
 		MANA		 = ((uint64_t)1 << 33), /*!< Used to keep track of mana for magic */
 		DROPABLE	 = ((uint64_t)1 << 34), /*!< Determines if something can be dropped */
 		PICKER		 = ((uint64_t)1 << 35), /*!< Determines if something can pick stuff up */
-		DROPPER		 = ((uint64_t)1 << 36)  /*!< Determines if something can drop stuff */
+		DROPPER		 = ((uint64_t)1 << 36), /*!< Determines if something can drop stuff */
+		SPHERE		 = ((uint64_t)1 << 37), /*!< Sphere an entity is associated with */
+		DEITY		 = ((uint64_t)1 << 38)  /*!< Determines if an entity is a deity */
 	};
 
 	struct Component {
@@ -423,6 +425,40 @@ namespace Component
 	{
 		Dropper() :
 			Component(Type::DROPPER)
+		{}
+	};
+
+	struct Sphere : Component
+	{
+		enum SphereType
+		{
+			LIFE,
+			DEATH,
+			CREATION,
+			DESTRUCTION,
+			CHAOS,
+			BALANCE,
+			MAGIC,
+			CRAFTING,
+			SMITHING,
+			WAR,
+			PEACE,
+			FERTILITY,
+			DISEASE
+		};
+
+		SphereType type;
+
+		Sphere(SphereType type) :
+			Component(Type::SPHERE)
+		  , type(type)
+		{}
+	};
+
+	struct Deity : Component
+	{
+		Deity() :
+			Component(Type::DEITY)
 		{}
 	};
 

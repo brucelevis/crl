@@ -4,7 +4,6 @@ aclocal.m4
 autom4te.cache
 autoscan.log
 compile
-configure
 depcomp
 install-sh
 missing

@@ -25,6 +25,8 @@
 
 #include "randomgenerator.h"
 
+#include <ncurses.h>
+
 ECS ecs;
 
 Application::Application() :
@@ -49,7 +51,9 @@ void Application::initialize()
 {
   Logger::Instance()->logLine("initializing");
 
-  IConsole::allocateConsole(IConsole::ConsoleType::BEARLIBTERMINAL, 80, 24);
+  IConsole::allocateConsole(IConsole::ConsoleType::NCURSES, 80, 24);
+
+  Logger::Instance()->logLine("done initializing");
 }
 
 void Application::cleanup()
@@ -90,9 +94,9 @@ void Application::mainloop()
     auto rng = RandomGenerator::Instance();
   #endif
 
-  Tiles::createDefinition(1, "wall_basic",  Tiles::Flags::BLOCKING,    IConsole::Color::WHITE, '#');
+  Tiles::createDefinition(1, "wall_basic",  Tiles::Flags::BLOCKING,    IConsole::Color::YELLOW, '#');
   Tiles::createDefinition(2, "null",        0,                         IConsole::Color::WHITE,  0 );
-  Tiles::createDefinition(2, "floor_basic", Tiles::Flags::TRANSPARENT, IConsole::Color::GREY,  '.');
+  Tiles::createDefinition(2, "floor_basic", Tiles::Flags::TRANSPARENT, IConsole::Color::YELLOW,  '.');
 
   ecs.init();
 
@@ -174,9 +178,10 @@ void Application::mainloop()
   sstream << "steady: "     << std::boolalpha << std::chrono::high_resolution_clock::is_steady;
   Logger::Instance()->logLine(sstream.str());
 
-    while (!IConsole::Instance()->shouldClose())
+  
+  while (!IConsole::Instance()->shouldClose())
   {
-      auto start = std::chrono::high_resolution_clock::now();
+    auto start = std::chrono::high_resolution_clock::now();
 
     update();
     renderFrame();

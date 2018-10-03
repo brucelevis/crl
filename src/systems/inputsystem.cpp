@@ -9,7 +9,6 @@
 
 #include "systems/inputsystem.h"
 #include "components.h"
-#include "BearLibTerminal.h"
 #include "ecs.h"
 
 #include <memory>
@@ -39,38 +38,34 @@ void InputSystem::handleMessage(SystemMessage::TMessagePtr message, uint64_t ent
 
     switch(imessage->key)
     {
-    case TK_KP_7:
+    case 'y':
       dx = -1; dy = -1;
       break;
-    case TK_UP:
-    case TK_KP_8:
+    case 'k':
       dx = 0;dy = -1;
       break;
-    case TK_KP_9:
+    case 'u':
       dx = 1; dy = -1;
       break;
-    case TK_LEFT:
-    case TK_KP_4:
+    case 'h':
       dx = -1; dy = 0;
       break;
-    case TK_KP_5:
+    case '.':
       //do nothing
       break;
-    case TK_RIGHT:
-    case TK_KP_6:
+    case 'l':
       dx = 1; dy = 0;
       break;
-    case TK_KP_1:
+    case 'b':
       dx = -1; dy = 1;
       break;
-    case TK_DOWN:
-    case TK_KP_2:
+    case 'j':
       dx = 0;dy = 1;
       break;
-    case TK_KP_3:
+    case 'n':
       dx = 1; dy = 1;
       break;
-    case TK_G:
+    case 'g':
       {
         auto p_comp = ecs->getComponent<Component::Position>(entity, Component::POSITION);
 

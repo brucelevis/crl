@@ -78,12 +78,20 @@ UISystem::~UISystem()
 
     std::stringstream sstream;
 
-    sstream << "ATK: " << s_comp->skills[Component::Skill::ATK] << "\n";
-    sstream << "STR: " << s_comp->skills[Component::Skill::STR] << "\n";
-    sstream << "AGI: " << s_comp->skills[Component::Skill::AGI] << "\n";
-    sstream << "INT: " << s_comp->skills[Component::Skill::INT] << "\n";
-
+    sstream << "ATK: " << s_comp->skills[Component::Skill::ATK];
     console->put_string(42, 9, sstream.str());
+    sstream.str("");
+
+    sstream << "STR: " << s_comp->skills[Component::Skill::STR];
+    console->put_string(42, 10, sstream.str());
+    sstream.str("");
+
+    sstream << "AGI: " << s_comp->skills[Component::Skill::AGI];
+    console->put_string(42, 11, sstream.str());
+    sstream.str("");
+
+    sstream << "INT: " << s_comp->skills[Component::Skill::INT];
+    console->put_string(42, 12, sstream.str());
   }
   if(c_comp)
   {
@@ -91,7 +99,7 @@ UISystem::~UISystem()
 
     std::stringstream sstream;
 
-    sstream << "[[Inventory]]" << "\n";
+    sstream << "[[Inventory]]";
 
     for(uint64_t entity : c_comp->items)
     {
@@ -99,7 +107,7 @@ UISystem::~UISystem()
 
       if(!e_n_comp) continue;
 
-      sstream << "\u2022 " << e_n_comp->text << "\n";
+      sstream << "\u2022 " << e_n_comp->text;
     }
 
     console->put_string(42, 15, sstream.str());

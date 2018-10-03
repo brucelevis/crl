@@ -12,6 +12,7 @@
 #include "console/iconsole.h"
 
 #include "console/bearlibterminalconsole.h"
+#include "console/ncursesconsole.h"
 
 /* static */ std::shared_ptr<IConsole> IConsole::console;
 /* static */ bool IConsole::allocated = false;
@@ -32,8 +33,9 @@ IConsole::IConsole(uint16_t width, uint16_t height) :
 
   switch(type)
   {
-  case ConsoleType::CURSES:
-    throw std::runtime_error("CURSES console not implemented");
+  case ConsoleType::NCURSES:
+    console = std::shared_ptr<IConsole>(new NCursesConsole(width, height));
+    break;
   case ConsoleType::BEARLIBTERMINAL:
     console = std::shared_ptr<IConsole>(new BearLibTerminalConsole(width, height));
     break;

@@ -20,23 +20,23 @@ public:
   //! Console types that can be created
   enum class ConsoleType
   {
-    CURSES      = 0, /*!< Curses based console */
+    NCURSES         = 0, /*!< Curses based console */
     BEARLIBTERMINAL = 1, /*!< BearLibTerminal based console */
-    TILESBEARLIB  = 2  /*!< BearLibTerminal based tiles console */
+    TILESBEARLIB    = 2  /*!< BearLibTerminal based tiles console */
   };
 
   //! Console colors
   enum Color
   {
-    RED     = 1,
+    RED       = 1,
     GREEN     = 2,
     YELLOW    = 3,
-    BLUE    = 4,
-    CYAN    = 5,
+    BLUE      = 4,
+    CYAN      = 5,
     MAGENTA   = 6,
     WHITE     = 7,
-    GREY    = 8,
-    DARK_GREY   = 9
+    GREY      = 8,
+    DARK_GREY = 9
   };
 
 

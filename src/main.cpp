@@ -14,6 +14,8 @@
 #include "logger.h"
 #include "app.h"
 
+#include <ncurses.h>
+
 int main(int argc, char** argv)
 {
   Application app;

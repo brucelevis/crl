@@ -205,6 +205,7 @@ std::shared_ptr<Map> MapGenerator::generate() const
 
   leafs.clear();
 
+  /*
   for(uint16_t x = 0; x < width; ++x)
   {
     for(uint16_t y = 0; y < height; ++y)
@@ -212,7 +213,7 @@ std::shared_ptr<Map> MapGenerator::generate() const
       new_map->visibility_map[x][y] = Map::Visibility::SEEN;
     }
   }
-
+  */
 
   return new_map;
 }

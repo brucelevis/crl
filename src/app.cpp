@@ -94,9 +94,9 @@ void Application::mainloop()
     auto rng = RandomGenerator::Instance();
   #endif
 
-  Tiles::createDefinition(1, "wall_basic",  Tiles::Flags::BLOCKING,    IConsole::Color::YELLOW, '#');
+  Tiles::createDefinition(1, "wall_basic",  Tiles::Flags::BLOCKING,    IConsole::Color::WHITE, '#');
   Tiles::createDefinition(2, "null",        0,                         IConsole::Color::WHITE,  0 );
-  Tiles::createDefinition(2, "floor_basic", Tiles::Flags::TRANSPARENT, IConsole::Color::YELLOW,  '.');
+  Tiles::createDefinition(2, "floor_basic", Tiles::Flags::TRANSPARENT, IConsole::Color::GREY,  '.');
 
   ecs.init();
 

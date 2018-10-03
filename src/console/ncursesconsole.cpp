@@ -21,10 +21,18 @@ NCursesConsole::NCursesConsole(uint16_t width, uint16_t height) :
 
 /* virtual */ bool NCursesConsole::init()
 {
-  initscr();
+  if(!initscr())
+  {
+    throw std::runtime_error("could not initialize curses!");
+  }
   raw();
   keypad(stdscr, true);
   noecho();
+
+  if(!has_colors())
+  {
+    throw std::runtime_error("terminal does not support colors!");
+  }
 
   start_color();
 
@@ -48,8 +56,8 @@ NCursesConsole::NCursesConsole(uint16_t width, uint16_t height) :
 
 /* virtual */ void NCursesConsole::set_color(Color color)
 {
-  //terminal_color(color_map[color]);
   attron(A_BOLD);
+  attroff(A_DIM);
 
   switch(color)
   {

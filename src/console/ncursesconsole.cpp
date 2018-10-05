@@ -7,6 +7,7 @@
  *  Copyright (C) 2018 - Joshua Lettink
  */
 
+#ifdef USE_NCURSES
 #include <ncurses.h>
 
 #include "console/ncursesconsole.h"
@@ -160,4 +161,5 @@ NCursesConsole::NCursesConsole(uint16_t width, uint16_t height) :
   return false; 
 }
 
+#endif /* USE_NCURSES */
 

@@ -7,6 +7,7 @@
  * Copyright (C) 2018 - Joshua Lettink
  */
 
+#ifdef USE_NCURSES
 #ifndef INCLUDE_NCURSESCONSOLE_H_
 #define INCLUDE_NCURSESCONSOLE_H_
 
@@ -45,3 +46,5 @@ private:
 };
 
 #endif /* INCLUDE_NCURSESCONSOLE_H_ */
+#endif /* USE_NCURSES */
+

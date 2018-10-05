@@ -1,9 +1,20 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
+
 AC_PREREQ([2.69])
 AC_INIT([CRL], [0.1], [joshua@particlebox.net])
 AM_INIT_AUTOMAKE([subdir-objects])
+
+#define variables
+AC_ARG_ENABLE([renderer],
+	      [  --renderer   choose renderer],
+              [renderer=$enableval],
+	      [renderer=ncurses])
+
+AM_CONDITIONAL([USE_NCURSES], [test x$renderer = "xncurses"])
+AM_CONDITIONAL([USE_BEARLIBTERMINAL], [test x$renderer = "xbearlibterminal"])
+
 AC_OUTPUT(Makefile src/Makefile)
 AC_CONFIG_SRCDIR([src])
 

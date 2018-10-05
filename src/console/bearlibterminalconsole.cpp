@@ -7,6 +7,7 @@
  *  Copyright (C) 2017 - Joshua Lettink
  */
 
+#ifdef USE_BEARLIBTERMINAL
 #include "console/bearlibterminalconsole.h"
 #include "logger.h"
 
@@ -113,4 +114,5 @@ BearLibTerminalConsole::BearLibTerminalConsole(uint16_t width, uint16_t height) 
   return terminal_state(TK_ALT);
 }
 
+#endif /* USE_BEARLIBTERMINAL */
 

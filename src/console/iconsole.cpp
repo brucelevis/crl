@@ -34,11 +34,19 @@ IConsole::IConsole(uint16_t width, uint16_t height) :
   switch(type)
   {
   case ConsoleType::NCURSES:
+#ifdef USE_NCURSES
     console = std::shared_ptr<IConsole>(new NCursesConsole(width, height));
     break;
+#else
+    throw std::runtime_error("Not compiled with NCurses support!");
+#endif /* USE_NCURSES */
   case ConsoleType::BEARLIBTERMINAL:
+#ifdef USE_BEARLIBTERMINAL
     console = std::shared_ptr<IConsole>(new BearLibTerminalConsole(width, height));
     break;
+#else
+    throw std::runtime_error("Not compiled with BearLibTerminal support!");
+#endif /* USE_BEARLIBTERMINAL */
   case ConsoleType::TILESBEARLIB:
     throw std::runtime_error("TILESBEARLIB console not implemented");
   }

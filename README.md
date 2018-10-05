@@ -4,6 +4,12 @@ This repo is called CRL meaning 'C++ Rogue Like'... As long as I do not have a n
 
 # Dependencies
 
+Using Ncurses:
+
+By default the application builds using NCurses.
+
+Using bearlibterminal:
+
 To run compiled binary the libBearLibTerminal.so library is required. It is possible to get this from: http://foo.wyrd.name/en:bearlibterminal. For convience this is also added to the /lib folder. To install manually just copy it to /usr/lib or something... whatever makes one happy ;)
 
 # Building
